@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Navbar from "./navbar/navbar";
 import { useRouter } from "next/navigation";
 import { auth, db } from "./firebaseConfig";
 import {
@@ -51,6 +52,8 @@ export default function LandingPage() {
   if (loading) return <div className="p-8 text-white">Loading...</div>;
 
   return (
+    <>
+      <Navbar />
 
     <div className="relative min-h-screen flex flex-col items-center justify-center text-center bg-gray-900">
 
@@ -61,13 +64,14 @@ export default function LandingPage() {
       <button
         onClick={handleLogin}
         className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer px-6 py-3 rounded text-white font-bold"
-      >
+        >
         Login with Google
       </button>
     </div>
 
     </div>
 
+        </>
 
   );
 }

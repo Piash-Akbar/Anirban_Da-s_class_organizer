@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Navbar from "../navbar/navbar";
 import { auth, db } from "../firebaseConfig";
 import {
   collection,
@@ -206,6 +207,8 @@ export default function AdminPage() {
 
   // 🔹 UI Section
   return (
+    <>
+    <Navbar />
     <div className="min-h-screen bg-gray-900 text-white p-6 md:p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-8 text-center">
@@ -320,7 +323,7 @@ export default function AdminPage() {
           <button
             onClick={() => router.push("/admin/usersdata")}
             className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white mx-4 px-6 py-2 rounded-md font-medium transition-colors"
-          >
+            >
             Students
           </button>
 
@@ -333,5 +336,6 @@ export default function AdminPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

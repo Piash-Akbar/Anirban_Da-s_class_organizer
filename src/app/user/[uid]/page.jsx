@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { auth, db } from "../../firebaseConfig";
+import Navbar from "@/app/navbar/navbar";
 import {
   doc,
   getDoc,
@@ -139,6 +140,8 @@ export default function UserPage() {
   }
 
   return (
+    <>
+      <Navbar />
     <div className="relative min-h-screen flex flex-col items-center justify-center text-center bg-gray-900">
       <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-30"></div>
 
@@ -204,7 +207,7 @@ export default function UserPage() {
                     minDate={new Date()} // Prevent past dates
                     className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     placeholderText="Select a date"
-                  />
+                    />
                 </div>
 
                 <div>
@@ -214,14 +217,14 @@ export default function UserPage() {
                     value={selectedTime}
                     onChange={(e) => setSelectedTime(e.target.value)}
                     className="w-full p-3 rounded-lg bg-gray-700 text-white border hover:cursor-text border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  />
+                    />
                 </div>
 
                 <div className="flex justify-end gap-4 mt-6">
                   <button
                     onClick={handleSchedule}
                     className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 hover:cursor-pointer rounded-lg font-medium transition-colors duration-200"
-                  >
+                    >
                     Submit
                   </button>
                   <button
@@ -240,9 +243,10 @@ export default function UserPage() {
           </div>
         )}
       </div>
-      
+
       </div>
 
     </div>
+    </>
   );
 }
