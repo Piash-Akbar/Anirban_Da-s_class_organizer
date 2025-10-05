@@ -18,6 +18,7 @@ import {
 import { signOut } from "firebase/auth";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import LoadingSpinner from "@/app/loading/loadingSpinner";
 
 export default function UserPage() {
   const params = useParams();
@@ -124,7 +125,9 @@ export default function UserPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <p className="text-lg text-gray-400">Loading...</p>
+        <div className="text-lg text-gray-400">
+          <LoadingSpinner />
+        </div>
       </div>
     );
   }

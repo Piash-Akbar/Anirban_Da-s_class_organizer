@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Navbar from "./navbar/navbar";
+import Navbar from "../navbar/navbar";
 import { useRouter } from "next/navigation";
-import { auth, db } from "./firebaseConfig";
+import { auth, db } from "../firebaseConfig";
 import {
   signInWithPopup,
   GoogleAuthProvider,

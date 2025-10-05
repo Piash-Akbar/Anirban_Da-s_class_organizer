@@ -12,6 +12,7 @@ import {
   limit,
 } from "firebase/firestore";
 import { signOut, onAuthStateChanged } from "firebase/auth";
+import LoadingSpinner from "@/app/loading/loadingSpinner";
 
 // Utility function to format date
 const formatDate = (date) => {
@@ -171,7 +172,7 @@ export default function AdminPage() {
     return () => unsubscribe();
   }, [router]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div> <LoadingSpinner /> </div>;
 
   return (
     <div className="p-6">
@@ -226,7 +227,9 @@ export default function AdminPage() {
       <div className="mt-6">
         <h2 className="text-xl font-semibold mb-2">Latest Approved Schedule</h2>
         {scheduleLoading ? (
-          <p>Loading schedule...</p>
+          <div>
+            <LoadingSpinner />
+          </div>
         ) : !latestSchedule ? (
           <p>No approved schedules found.</p>
         ) : (

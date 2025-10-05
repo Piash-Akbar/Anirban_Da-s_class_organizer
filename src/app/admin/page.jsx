@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "../loading/loadingSpinner";
 
 export default function AdminPage() {
   const [classRequests, setClassRequests] = useState([]);
@@ -200,7 +201,9 @@ export default function AdminPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <p className="text-lg text-gray-400">Loading...</p>
+        <div className="text-lg text-gray-400">
+          <LoadingSpinner />
+        </div>
       </div>
     );
   }
