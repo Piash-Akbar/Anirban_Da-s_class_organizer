@@ -5,6 +5,17 @@ import ConcertCard from "./components/ConcertCards";
 import { db } from "./firebaseConfig";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
+import { Great_Vibes } from "next/font/google";
+
+const greatVibes = Great_Vibes({
+  subsets: ["latin"],
+  weight: "400", // ✅ only available weight
+  variable: "--font-great-vibes",
+});
+
+
+
+
 // Utility function to format date
 const formatDate = (date) => {
   try {
@@ -79,7 +90,7 @@ export default function Portfolio() {
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-50"></div>
           <div className="relative z-10 text-center px-4">
-            <h1 className="text-6xl font-serif font-bold mb-4 animate-fade-in">Anirban Bhattacharjee</h1>
+          <h1 className={`text-6xl font-bold mb-4 animate-fade-in font-serif antialiased ${greatVibes.className}`}> Anirban Bhattacharjee </h1>
             <p className="text-2xl font-light mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>Master Violinist | Classical Maestro</p>
             <a href="#about" className="bg-white text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition animate-bounce">Discover My Journey</a>
           </div>

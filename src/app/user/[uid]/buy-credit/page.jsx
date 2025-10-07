@@ -12,19 +12,6 @@ import { getAuth, signOut } from "firebase/auth";
 import Image from "next/image";
 import { db, auth} from "../../../firebaseConfig";
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCnC0PIIObZmyjA71QcuvKWBAgDOdR7ZWs",
-//   authDomain: "music-class-organizer.firebaseapp.com",
-//   projectId: "music-class-organizer",
-//   storageBucket: "music-class-organizer.firebasestorage.app",
-//   messagingSenderId: "58811528949",
-//   appId: "1:58811528949:web:2d70afe79536d988ec77bc",
-//   measurementId: "G-XLSHQT4D98",
-// };
-
-// const app = initializeApp(firebaseConfig);
-// const db = getFirestore(app);
-// const auth = getAuth(app);
 
 export default function BuyCreditPage() {
   const { uid } = useParams();
