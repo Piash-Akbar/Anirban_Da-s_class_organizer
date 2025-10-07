@@ -295,13 +295,13 @@ export default function AdminPage() {
                       <div className="flex space-x-3">
                         <button
                           onClick={() => approveRequest("classesRequests", req.id)}
-                          className="bg-gradient-to-r from-green-500 to-green-700 text-white px-5 py-2 rounded-lg font-medium hover:from-green-600 hover:to-green-800 transition-all duration-300"
+                          className="bg-gradient-to-r hover:cursor-pointer from-green-500 to-green-700 text-white px-5 py-2 rounded-lg font-medium hover:from-green-600 hover:to-green-800 transition-all duration-300"
                         >
                           Approve
                         </button>
                         <button
                           onClick={() => declineRequest("classesRequests", req.id)}
-                          className="bg-gradient-to-r from-red-500 to-red-700 text-white px-5 py-2 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
+                          className="bg-gradient-to-r from-red-500 hover:cursor-pointer to-red-700 text-white px-5 py-2 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
                         >
                           Decline
                         </button>
@@ -348,13 +348,13 @@ export default function AdminPage() {
                       <div className="flex space-x-3">
                         <button
                           onClick={() => approveRequest("creditRequests", req.id)}
-                          className="bg-gradient-to-r from-green-500 to-green-700 text-white px-5 py-2 rounded-lg font-medium hover:from-green-600 hover:to-green-800 transition-all duration-300"
+                          className="bg-gradient-to-r hover:cursor-pointer from-green-500 to-green-700 text-white px-5 py-2 rounded-lg font-medium hover:from-green-600 hover:to-green-800 transition-all duration-300"
                         >
                           Approve
                         </button>
                         <button
                           onClick={() => declineRequest("creditRequests", req.id)}
-                          className="bg-gradient-to-r from-red-500 to-red-700 text-white px-5 py-2 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
+                          className="bg-gradient-to-r hover:cursor-pointer from-red-500 to-red-700 text-white px-5 py-2 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
                         >
                           Decline
                         </button>
@@ -416,7 +416,7 @@ export default function AdminPage() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-amber-400 to-pink-500 text-white px-6 py-3 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600 transition-all duration-300"
+                className="w-full bg-gradient-to-r hover:cursor-pointer from-amber-400 to-pink-500 text-white px-6 py-3 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600 transition-all duration-300"
               >
                 Add Concert
               </button>
@@ -438,7 +438,7 @@ export default function AdminPage() {
               />
               <button
                 onClick={postNotice}
-                className="mt-4 w-full bg-gradient-to-r from-amber-400 to-pink-500 text-white px-6 py-3 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600 transition-all duration-300"
+                className="mt-4 w-full hover:cursor-pointer bg-gradient-to-r from-amber-400 to-pink-500 text-white px-6 py-3 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600 transition-all duration-300"
               >
                 Post Notice
               </button>
@@ -449,13 +449,13 @@ export default function AdminPage() {
           <div className="text-center space-x-4 animate-fade-in">
             <button
               onClick={() => router.push("/admin/usersdata")}
-              className="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-600 hover:to-blue-800 transition-all duration-300"
+              className="bg-gradient-to-r hover:cursor-pointer from-blue-500 to-blue-700 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-600 hover:to-blue-800 transition-all duration-300"
             >
-              Students
+              Users and Edits
             </button>
             <button
               onClick={handleLogout}
-              className="bg-gradient-to-r from-red-500 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
+              className="bg-gradient-to-r hover:cursor-pointer from-red-500 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
             >
               Logout
             </button>

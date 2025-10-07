@@ -379,13 +379,13 @@ export default function AdminPage() {
                         <div className="flex space-x-3">
                           <button
                             onClick={() => updateNotice(notice.id, editNotice.text)}
-                            className="bg-gradient-to-r from-green-500 to-green-700 text-white px-5 py-2 rounded-lg font-medium hover:from-green-600 hover:to-green-800 transition-all duration-300"
+                            className="bg-gradient-to-r hover:cursor-pointer from-green-500 to-green-700 text-white px-5 py-2 rounded-lg font-medium hover:from-green-600 hover:to-green-800 transition-all duration-300"
                           >
                             Save
                           </button>
                           <button
                             onClick={() => setEditNotice(null)}
-                            className="bg-gradient-to-r from-gray-500 to-gray-700 text-white px-5 py-2 rounded-lg font-medium hover:from-gray-600 hover:to-gray-800 transition-all duration-300"
+                            className="bg-gradient-to-r hover:cursor-pointer from-gray-500 to-gray-700 text-white px-5 py-2 rounded-lg font-medium hover:from-gray-600 hover:to-gray-800 transition-all duration-300"
                           >
                             Cancel
                           </button>
@@ -402,13 +402,13 @@ export default function AdminPage() {
                         <div className="flex space-x-3">
                           <button
                             onClick={() => setEditNotice({ id: notice.id, text: notice.text })}
-                            className="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-5 py-2 rounded-lg font-medium hover:from-blue-600 hover:to-blue-800 transition-all duration-300"
+                            className="bg-gradient-to-r hover:cursor-pointer from-blue-500 to-blue-700 text-white px-5 py-2 rounded-lg font-medium hover:from-blue-600 hover:to-blue-800 transition-all duration-300"
                           >
                             Update
                           </button>
                           <button
                             onClick={() => deleteNotice(notice.id)}
-                            className="bg-gradient-to-r from-red-500 to-red-700 text-white px-5 py-2 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
+                            className="bg-gradient-to-r hover:cursor-pointer from-red-500 to-red-700 text-white px-5 py-2 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
                           >
                             Delete
                           </button>
@@ -475,13 +475,13 @@ export default function AdminPage() {
                         <div className="flex space-x-3">
                           <button
                             onClick={() => updateConcert(concert.id, editConcert)}
-                            className="bg-gradient-to-r from-green-500 to-green-700 text-white px-5 py-2 rounded-lg font-medium hover:from-green-600 hover:to-green-800 transition-all duration-300"
+                            className="bg-gradient-to-r hover:cursor-pointer from-green-500 to-green-700 text-white px-5 py-2 rounded-lg font-medium hover:from-green-600 hover:to-green-800 transition-all duration-300"
                           >
                             Save
                           </button>
                           <button
                             onClick={() => setEditConcert(null)}
-                            className="bg-gradient-to-r from-gray-500 to-gray-700 text-white px-5 py-2 rounded-lg font-medium hover:from-gray-600 hover:to-gray-800 transition-all duration-300"
+                            className="bg-gradient-to-r hover:cursor-pointer from-gray-500 to-gray-700 text-white px-5 py-2 rounded-lg font-medium hover:from-gray-600 hover:to-gray-800 transition-all duration-300"
                           >
                             Cancel
                           </button>
@@ -506,13 +506,13 @@ export default function AdminPage() {
                         <div className="flex space-x-3">
                           <button
                             onClick={() => setEditConcert({ id: concert.id, ...concert })}
-                            className="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-5 py-2 rounded-lg font-medium hover:from-blue-600 hover:to-blue-800 transition-all duration-300"
+                            className="bg-gradient-to-r hover:cursor-pointer from-blue-500 to-blue-700 text-white px-5 py-2 rounded-lg font-medium hover:from-blue-600 hover:to-blue-800 transition-all duration-300"
                           >
                             Update
                           </button>
                           <button
                             onClick={() => deleteConcert(concert.id)}
-                            className="bg-gradient-to-r from-red-500 to-red-700 text-white px-5 py-2 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
+                            className="bg-gradient-to-r hover:cursor-pointer from-red-500 to-red-700 text-white px-5 py-2 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
                           >
                             Delete
                           </button>
@@ -529,13 +529,13 @@ export default function AdminPage() {
           <div className="text-center space-x-4 animate-fade-in">
             <button
               onClick={() => router.push("/admin")}
-              className="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-600 hover:to-blue-800 transition-all duration-300"
+              className="bg-gradient-to-r hover:cursor-pointer from-blue-500 to-blue-700 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-600 hover:to-blue-800 transition-all duration-300"
             >
               Back to Dashboard
             </button>
             <button
               onClick={handleLogout}
-              className="bg-gradient-to-r from-red-500 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
+              className="bg-gradient-to-r hover:cursor-pointer from-red-500 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-600 hover:to-red-800 transition-all duration-300"
             >
               Logout
             </button>
