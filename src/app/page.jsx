@@ -91,7 +91,7 @@ export default function Portfolio() {
           <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-50"></div>
           <div className="relative z-10 text-center px-4">
           <h1 className={`text-6xl font-bold mb-4 animate-fade-in font-serif antialiased ${greatVibes.className}`}> Anirban Bhattacharjee </h1>
-            <p className="text-2xl font-light mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>Master Violinist | Classical Maestro</p>
+            <p className="text-2xl font-light mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>Pioneer of the Violin in the Senia-Shahjahanpur Gharana</p>
             <a href="#about" className="bg-white text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition animate-bounce">Discover My Journey</a>
           </div>
         </section>
@@ -199,7 +199,7 @@ export default function Portfolio() {
             <h2 className="text-4xl font-serif font-bold mb-8 text-center animate-fade-in">Discography</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <iframe
-                src="https://www.youtube.com/embed/E84fCd7DsNQ?si=HQ2zhvbscAp2LTqS"
+                src="https://www.youtube.com/embed/E84fCd7DsNQ?si=_ZnB4moSiCjEcP8k" 
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -208,7 +208,7 @@ export default function Portfolio() {
                 className="w-full aspect-video rounded-lg shadow-lg hover:scale-105 transition transform"
               ></iframe>
               <iframe
-                src="https://www.youtube.com/embed/1k2-z_t2IHw?si=ZblUbzY3G7n4JfO0"
+                src="https://www.youtube.com/embed/gR7UQY9RdQA?si=FyE8KwgCIq35bls-"
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -217,7 +217,7 @@ export default function Portfolio() {
                 className="w-full aspect-video rounded-lg shadow-lg hover:scale-105 transition transform"
               ></iframe>
               <iframe
-                src="https://www.youtube.com/embed/LV58Ihr3THg?si=QLsroXwmSA_D6pgX"
+                src="https://www.youtube.com/embed/QvvjFYP8ds0?si=fmBXNCAb81VtlEdB"
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -226,7 +226,7 @@ export default function Portfolio() {
                 className="w-full aspect-video rounded-lg shadow-lg hover:scale-105 transition transform"
               ></iframe>
               <iframe
-                src="https://www.youtube.com/embed/EM7ltqM9wE0?si=2T3aLEaTxkrhDPWc"
+                src="https://www.youtube.com/embed/RnKsHJ4BQK8?si=wQkNH2EEBpL7opy_"
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -235,7 +235,7 @@ export default function Portfolio() {
                 className="w-full aspect-video rounded-lg shadow-lg hover:scale-105 transition transform"
               ></iframe>
               <iframe
-                src="https://www.youtube.com/embed/gR7UQY9RdQA?si=WZAMpauMEFpU59UD"
+                src="https://www.youtube.com/embed/VQHT88wU7zg?si=rNEjNJHdEmm7RD8Y"
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -244,7 +244,34 @@ export default function Portfolio() {
                 className="w-full aspect-video rounded-lg shadow-lg hover:scale-105 transition transform"
               ></iframe>
               <iframe
-                src="https://www.youtube.com/embed/qhYY1ja81BI?si=41MvUx4WJQGeptM7"
+                src="https://www.youtube.com/embed/4C_W_D64hqE?si=ulNtVNscn22sJK8n"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="w-full aspect-video rounded-lg shadow-lg hover:scale-105 transition transform"
+              ></iframe>
+              <iframe
+                src="https://www.youtube.com/embed/tj1iqaApLfw?si=C_rzckoGuyKFzpH5"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="w-full aspect-video rounded-lg shadow-lg hover:scale-105 transition transform"
+              ></iframe>
+              <iframe
+                src="https://www.youtube.com/embed/pSXqfoYHB_0?si=fWcJF299pg4_7yr5" 
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="w-full aspect-video rounded-lg shadow-lg hover:scale-105 transition transform"
+              ></iframe>
+              <iframe
+                src="https://www.youtube.com/embed/S-KMcYPjs5A?si=jQ0ip_u7kTU2CXcf"
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
