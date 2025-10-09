@@ -59,8 +59,27 @@ export default function LandingPage() {
 
     <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-30"></div>
 
-    <div className="relative z-10">
-      <h1 className="text-4xl font-bold bg-amber-600 text-gray-800 p-4 rounded-2xl mb-6">Welcome to "No Violin only Violance"</h1>
+    <div className="relative z-10 flex flex-col">
+      <h1 className="text-6xl font-bold font-palisade bg-transparent text-white p-4 rounded-2xl mb-6">The one stop solution for all your violin learning needs.</h1>
+
+
+
+      <button 
+        className="bg-green-600 m-4 hover:bg-blue-700 hover:cursor-pointer px-6 py-3 rounded text-white font-bold"
+        onClick={() => router.push("/welcome-to-the-journey")}
+      >
+        For New Students
+      </button>
+      <button 
+        className="bg-red-600 m-4 hover:bg-blue-700 hover:cursor-pointer px-6 py-3 rounded text-white font-bold"
+        onClick={() => router.push("/take-a-lesson")}
+      >
+        For Existing Students
+      </button>
+
+
+
+
       <button
         onClick={handleLogin}
         className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer px-6 py-3 rounded text-white font-bold"
