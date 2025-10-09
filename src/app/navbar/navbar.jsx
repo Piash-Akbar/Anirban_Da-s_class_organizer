@@ -29,7 +29,7 @@ export default function Navbar() {
               Gurus & Lineage
             </Link>
               <Link href="/portfolio" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium">
-                <b> Students' corner </b>
+                <b> Students' Corner </b>
               </Link>
               <Link href="#contact" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                 Contact

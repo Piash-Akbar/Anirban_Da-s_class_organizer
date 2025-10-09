@@ -11,6 +11,7 @@ import {
   onAuthStateChanged
 } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import LoadingSpinner from "../loading/loadingSpinner";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -49,7 +50,7 @@ export default function LandingPage() {
     await signInWithPopup(auth, provider);
   };
 
-  if (loading) return <div className="p-8 text-white">Loading...</div>;
+  if (loading) return <div className="p-8 text-white"><LoadingSpinner /></div>;
 
   return (
     <>
@@ -66,7 +67,7 @@ export default function LandingPage() {
 
       <button 
         className="bg-green-600 m-4 hover:bg-blue-700 hover:cursor-pointer px-6 py-3 rounded text-white font-bold"
-        onClick={() => router.push("/welcome-to-the-journey")}
+        onClick={() => window.location.href = "https://docs.google.com/forms/d/1_tdk6BvpHvKqWZQhZJ-7D9i6GSC2fngkg3c62vyPYzc/viewform?edit_requested=true"}
       >
         For New Students
       </button>
@@ -74,7 +75,7 @@ export default function LandingPage() {
         className="bg-red-600 m-4 hover:bg-blue-700 hover:cursor-pointer px-6 py-3 rounded text-white font-bold"
         onClick={() => router.push("/take-a-lesson")}
       >
-        For Existing Students
+        For Existing Students (Dummy)
       </button>
 
 
@@ -84,7 +85,7 @@ export default function LandingPage() {
         onClick={handleLogin}
         className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer px-6 py-3 rounded text-white font-bold"
         >
-        Login with Google
+        For Existing Students (Login)
       </button>
     </div>
 
