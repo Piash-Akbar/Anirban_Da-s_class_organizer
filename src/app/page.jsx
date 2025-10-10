@@ -92,14 +92,14 @@ export default function Portfolio() {
           <div className="relative z-10 text-center px-4">
           <h1 className={`text-8xl font-bold mb-4 animate-fade-in font-serif antialiased ${greatVibes.className}`}> Anirban Bhattacharjee </h1>
             <p className="text-6xl font-palisade font-bold mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>Pioneer of the Violin in the Senia-Shahjahanpur Gharana</p>
-            <a href="#about" className="bg-white text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition animate-bounce">Discover My Journey</a>
+            <a href="/#about" className="bg-white text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition animate-bounce">Discover My Journey</a>
           </div>
         </section>
 
         {/* About Section */}
         <section id="about" className="py-20 px-4 md:px-20 bg-gray-800">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-4xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in">Biography</h2>
+            <h2 className={`text-6xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in p-4 antialiased ${greatVibes.className}`}>Biography</h2>
 
             {/* First Paragraph */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 items-center bg-gray-900 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 animate-pulse-card animate-fade-in" style={{ animationDelay: '200ms' }}>
@@ -174,7 +174,7 @@ export default function Portfolio() {
         {/* Gurus and Lineage Section */}
         <section id="gurus" className="py-20 px-4 md:px-20 bg-gray-800">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-4xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in">Gurus and Lineage</h2>
+            <h2 className={`text-8xl p-4 font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in   antialiased ${greatVibes.className}`}>Gurus and Lineage</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-gray-900 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 animate-pulse-card animate-fade-in" style={{ animationDelay: '200ms' }}>
               <div>
                 <p className="text-lg leading-relaxed text-gray-200 font-light">
@@ -196,7 +196,7 @@ export default function Portfolio() {
         {/* Gallery Section */}
         <section id="gallery" className="py-20 px-4 md:px-20 bg-gray-900">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-serif font-bold mb-8 text-center animate-fade-in">Discography</h2>
+            <h2 className={`text-6xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in p-4 antialiased ${greatVibes.className}`}>Discography</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <iframe
                 src="https://www.youtube.com/embed/E84fCd7DsNQ?si=_ZnB4moSiCjEcP8k" 
@@ -286,7 +286,7 @@ export default function Portfolio() {
         {/* Upcoming Events Section */}
         <section id="events" className="py-20 px-4 md:px-20 bg-gray-800">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-serif font-bold mb-8 text-center animate-fade-in">Upcoming Performances</h2>
+            <h2 className={`text-6xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in p-4 antialiased ${greatVibes.className}`}>Upcoming Performances</h2>
             {error && (
               <div className="mb-8 p-4 bg-red-900 bg-opacity-80 backdrop-blur-md text-white rounded-xl shadow-lg animate-fade-in">
                 {error}
