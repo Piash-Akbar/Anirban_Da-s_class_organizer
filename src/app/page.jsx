@@ -187,16 +187,16 @@ export default function Portfolio() {
               </div>
               <div className="flex flex-col items-center">
                 <img 
-                  src="/Gurus.jpg" 
+                  src="/NBRS.jpg" 
                   alt="Guru Shri Supratik Sengupta" 
                   className="rounded-lg shadow-md w-full max-w-xs object-cover transform hover:scale-105 transition-all duration-300" 
                   onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=Guru+Image+Not+Found'; }}
                 />
-                <p className="mt-4 text-sm text-gray-300 text-center">Collage</p>
+                <p className="mt-4 text-sm text-gray-300 text-center">Pt. Nikhil Banerjee | Pt. Ravi Shankar</p>
               </div>
               <div className="flex flex-col items-center">
                 <img 
-                  src="/NBRS.jpg" 
+                  src="/Gurus.jpg" 
                   alt="Guru Dr. Sisirkana Dhar Chowdhury" 
                   className="rounded-lg shadow-md w-full max-w-xs object-cover transform hover:scale-105 transition-all duration-300" 
                   onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=Guru+Image+Not+Found'; }}
