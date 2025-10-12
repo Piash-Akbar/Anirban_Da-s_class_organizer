@@ -1,0 +1,137 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Navbar from "../navbar/navbar";
+import { useRouter } from "next/navigation";
+import { auth, db } from "../firebaseConfig";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import LoadingSpinner from "../loading/loadingSpinner";
+
+export default function LandingPage() {
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [checkingForm, setCheckingForm] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        // Ensure the user object and email are available before proceeding.
+        if (!firebaseUser.email) {
+          setLoading(false);
+          return;
+        }
+
+        const userRef = doc(db, "users", firebaseUser.uid);
+        const docSnap = await getDoc(userRef);
+        if (!docSnap.exists()) {
+          await setDoc(userRef, {
+            uid: firebaseUser.uid,
+            email: firebaseUser.email || "N/A",
+            displayName: firebaseUser.displayName || "Organizer User",
+            photoURL: firebaseUser.photoURL || "",
+            role: "user",
+            createdAt: new Date().toISOString(),
+          });
+        }
+
+        setUser(firebaseUser);
+
+        setCheckingForm(true);
+        try {
+          const response = await fetch("/api/checkFormSubmission", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: firebaseUser.email,
+            }),
+          });
+          if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+          }
+          const data = await response.json();
+          console.log("API response:", data);
+
+          if (data.hasSubmitted) {
+            // User exists in the sheet, update their role in Firestore.
+            const userRef = doc(db, "users", firebaseUser.uid);
+            await setDoc(userRef, { role: "student" }, { merge: true });
+            console.log("User role updated to 'student' in Firestore.");
+
+            router.push("/existing-students");
+          } else {
+            router.push("/complete-form");
+          }
+        } catch (error) {
+          console.error("Error checking form submission:", error);
+          router.push("/complete-form");
+        } finally {
+          setCheckingForm(false);
+        }
+      } else {
+        // No user is signed in.
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
+  const handleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
+
+  const handleFormRedirect = () => {
+    router.push(
+      "https://docs.google.com/forms/d/1_tdk6BvpHvKqWZQhZJ-7D9i6GSC2fngkg3c62vyPYzc/viewform?edit_requested=true"
+    );
+  };
+
+  if (loading || checkingForm) {
+    return (
+      <div className="p-8 text-white">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Navbar />
+      <div className="relative min-h-screen flex flex-col items-center justify-center text-center bg-gray-900">
+        <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-30"></div>
+        <div className="relative z-10 flex flex-col">
+          <h1 className="text-6xl font-bold font-palisade bg-transparent text-white p-4 rounded-2xl mb-6">
+            The one stop solution for all your violin learning needs.
+          </h1>
+
+          <button
+            className="bg-green-600 m-4 hover:bg-blue-700 hover:cursor-pointer px-6 py-3 rounded text-white font-bold"
+            onClick={handleFormRedirect}
+          >
+            For New Students
+          </button>
+
+          {!user && (
+            <button
+              onClick={handleLogin}
+              className="bg-blue-600 m-4 hover:bg-blue-700 hover:cursor-pointer px-6 py-3 rounded text-white font-bold"
+            >
+              Login to Continue
+            </button>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
