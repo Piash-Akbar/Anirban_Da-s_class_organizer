@@ -75,14 +75,14 @@ export default function Portfolio() {
             100% { opacity: 1; transform: translateY(0); }
           }
           .animate-fade-in {
-            animation: fadeIn 1s ease-in-out forwards;
+            animation: fadeIn 2s ease-in-out forwards;
           }
           @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.02); }
           }
           .animate-pulse-card {
-            animation: pulse 3s ease-in-out infinite;
+            animation: pulse 13s ease-in-out infinite;
           }
         `}</style>
 
@@ -174,24 +174,55 @@ export default function Portfolio() {
         {/* Gurus and Lineage Section */}
         <section id="gurus" className="py-20 px-4 md:px-20 bg-gray-800">
           <div className="max-w-5xl mx-auto">
-            <h2 className={`text-8xl p-4 font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in   antialiased ${greatVibes.className}`}>Gurus and Lineage</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-gray-900 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 animate-pulse-card animate-fade-in" style={{ animationDelay: '200ms' }}>
-              <div>
-                <p className="text-lg leading-relaxed text-gray-200 font-light">
-                  Embark on a musical odyssey guided by the luminaries of Hindustani Classical Music! Anirban Bhattacharjee’s artistry is a tapestry woven from the teachings of revered gurus. From the rhythmic foundations laid by his father, <strong>Jitesh Bhattacharjee</strong>, to the intricate violin techniques imparted by <strong>Shri Ashim Dutta</strong> and <strong>Shri Manoj Baruah</strong>, each mentor has sculpted his unique sound. The legendary <strong>Dr. Sisirkana Dhar Chowdhury</strong> of the Senia Maihar Gharana infused his music with soulful depth, while <strong>Shri Supratik Sengupta</strong> of the Senia Shahjahanpur Gharana added virtuosic finesse. Under the tutelage of the late <strong>Dr. Swarna Khuntia</strong>, a disciple of Dr. N. Rajam, Anirban mastered the Gayaki style, blending melody with emotion. This illustrious lineage fuels his performances with a celestial spark, resonating across time and tradition.
-                </p>
+            <h2 className={`text-8xl p-4 font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in animate-fade-out ${greatVibes.className}`}>Gurus and Lineage</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+              <div className="flex flex-col items-center">
+                <img 
+                  src="/ABBaba.jpg" 
+                  alt="Guru Jitesh Bhattacharjee" 
+                  className="rounded-lg shadow-md w-full max-w-xs object-cover transform hover:scale-105 transition-all duration-300" 
+                  onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=Guru+Image+Not+Found'; }}
+                />
+                <p className="mt-4 text-sm text-gray-300 text-center">Jitesh Bhattacharjee - Tabla Mentor</p>
               </div>
-              <div className="flex justify-center">
+              <div className="flex flex-col items-center">
                 <img 
                   src="/Gurus.jpg" 
-                  alt="Anirban's Gurus" 
-                  className="rounded-lg shadow-md w-full max-w-md object-cover transform hover:scale-105 transition-all duration-300" 
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/400?text=Gurus+Image+Not+Found'; }}
+                  alt="Guru Shri Supratik Sengupta" 
+                  className="rounded-lg shadow-md w-full max-w-xs object-cover transform hover:scale-105 transition-all duration-300" 
+                  onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=Guru+Image+Not+Found'; }}
                 />
+                <p className="mt-4 text-sm text-gray-300 text-center">Collage</p>
               </div>
+              <div className="flex flex-col items-center">
+                <img 
+                  src="/NBRS.jpg" 
+                  alt="Guru Dr. Sisirkana Dhar Chowdhury" 
+                  className="rounded-lg shadow-md w-full max-w-xs object-cover transform hover:scale-105 transition-all duration-300" 
+                  onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=Guru+Image+Not+Found'; }}
+                />
+                <p className="mt-4 text-sm text-gray-300 text-center">Pt. Nikhil Banerjee | Pt. Ravi Shankar</p>
+              </div>
+            </div>
+            <div className="bg-gray-900 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 animate-pulse-card" style={{ animationDelay: '200ms' }}>
+              <p className="text-lg leading-relaxed text-gray-200 font-light animate-fade-in animate-fade-out" style={{ animationDelay: '200ms' }}>
+              The seeds of music were sown in Anirban even before he developed a conscious memory of his own. Anirban has famously said that he has no recollection of not knowing Teentaal, Ektaal, Jhaptaal, Rupak Taal, Keherwa or Dadra. The credit for this goes entirely to his father, Shri Jitesh Bhattacharjee, who, despite being an engineer by profession, is an accomplished Tabla artist who has had the great fortune of accompanying legends like Pandit Hariprasad Chaurasia and Vidushi Girija Devi. <br />
+
+Besides rhythmic training, Anirban also learned the basics of melody from his father, who is as adept with Rabindrasangeet and harmonium as he is with the Tabla. <br />
+
+Anirban's training in violin began at the age of 15 under Shri Ashim Dutta of Guwahati, Assam. In recognition of Anirban's prodigious talent, Mr. Dutta chose to not train Anirban within a mere ten months of starting to teach him, and handed him over to Shri Manoj Baruah, a virtuoso who had already compounded manifold the popularity of the violin in the North-East. A disciple of the legendary Dr. Sisirkana Dhar Choudhury of the Senia-Maihar Gharana, Shri Manoj Baruah did not fail to see the immense potential that lay dormant in his new student, and almost immediately began educating Anirban in advanced techniques of the violin. This is an association that lasted nearly a decade, where Anirban learned not only the nitty-gritties of Tantrakari violin-playing, but also a lot of Gayaki-ang as well as the difference between performing classical music on stage and playing in recording sessions for commercial projects. Anirban still emphasises that he is yet to see a smarter violin session artist than Manoj Ji. <br />
+
+While under the tutelage of Manoj Ji, Anirban moved to Kolkata to pursue a bachelors degree in Mathematics from the renowned St. Xavier's College. During this period, Anirban had the privilege of being mentored by Manoj Ji's legendary Guru, Dr. Sisirkana Dhar Choudhury herself. Sisirkana Ji's Maargdarshan opened up horizons of raga music hitherto unknown to Anirban. Under the legend's tutelage, Anirban was exposed to several rare Ragas that are performed exclusively in the Senia-Maihar Gharana, in addition to being taught rather intricate paths of raga development even in common ragas. <br />
+
+Pandit V.G. Jog was a pioneering figure in Tantrakari-ang violin playing, and Anirban received exposure to Pandit Jog's perspectives from Prof. Biswajit Roy Choudhury, one of Pandit Jog's several illustrious disciples. <br />
+
+Even though almost the entirety of Anirban's training has been in the Tantrakari system, his formative training ensured that the Gayaki method was never too far from his periphery of vision. In particular, Dr. N. Rajam's music left a deep impression in Anirban's mind. So, he sought the guidance of Dr. Swarna Khuntia, a celebrated disciple of Amma Ji (as Dr. Rajam is called by everyone in her lineage), and Swarna Ji was more than happy to oblige. This turned out to be the final piece in cementing Anirban's very individual style of violin playing - the unprecedented hybrid of the Tantrakari and Gayaki systems that his audience is now witness to. <br />
+
+Anirban has been a lifelong fan of the music of Pandit Nikhil Banerjee and Pandit Ravi Shankar. So, it is no surprise that Sitar repertoire would become a key component in his delivery of the Vidya imparted to him by his violin Gurus. To develop an in-depth understanding of the music of these legends, Anirban came under the tutelage of Shri Supratik Sengupta, who is himself an amalgamation of thorough Taalim received from various sources. Even though he is primarily known today as a torch-bearing disciple of the legendary Sarod maestro of Senia-Shahjahanpur, Pandit Buddhadev Dasgupta, his training in Sitar comes from Gurus like Pandit Debaprasad Chakraborty, Pandit Ajoy Sinha Roy and Shri Pradeep Kumar Chakraborty. It is under Supratik Ji's decade-long guidance that Anirban's classical repertoire took its current form, and continues to explore further avenues.              </p>
             </div>
           </div>
         </section>
+
 
         {/* Gallery Section */}
         <section id="gallery" className="py-20 px-4 md:px-20 bg-gray-900">
