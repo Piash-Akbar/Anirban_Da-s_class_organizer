@@ -17,12 +17,13 @@ export default function LandingPage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [checkingForm, setCheckingForm] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        // Ensure the user object and email are available before proceeding.
         if (!firebaseUser.email) {
+          console.warn("No email found for user:", firebaseUser.uid);
           setLoading(false);
           return;
         }
@@ -39,9 +40,9 @@ export default function LandingPage() {
             createdAt: new Date().toISOString(),
           });
         } else {
-          // Check user role
           const userData = docSnap.data();
           if (userData.role === "admin") {
+            console.log("Redirecting admin to /admin");
             router.push("/admin");
             setLoading(false);
             return;
@@ -49,8 +50,8 @@ export default function LandingPage() {
         }
 
         setUser(firebaseUser);
-
         setCheckingForm(true);
+
         try {
           const response = await fetch("/api/checkFormSubmission", {
             method: "POST",
@@ -59,30 +60,29 @@ export default function LandingPage() {
               email: firebaseUser.email,
             }),
           });
+
           if (!response.ok) {
-            throw new Error(`API error: ${response.status}`);
+            throw new Error(`API error: ${response.status} ${response.statusText}`);
           }
+
           const data = await response.json();
           console.log("API response:", data);
 
           if (data.hasSubmitted) {
-            // User exists in the sheet, update their role in Firestore.
-            const userRef = doc(db, "users", firebaseUser.uid);
             await setDoc(userRef, { role: "student" }, { merge: true });
-            console.log("User role updated to 'student' in Firestore.");
-
+            console.log("User role updated to 'student' in Firestore");
             router.push(`/user/${firebaseUser.uid}`);
           } else {
             router.push(`/user/${firebaseUser.uid}/complete-form`);
           }
         } catch (error) {
-          console.error("Error checking form submission:", error);
-          router.push("/portfolio");
+          console.error("Error checking form submission:", error.message);
+          setError(error.message);
+          router.push(`/user/${firebaseUser.uid}/complete-form`);
         } finally {
           setCheckingForm(false);
         }
       } else {
-        // No user is signed in.
         setLoading(false);
       }
     });
@@ -95,14 +95,13 @@ export default function LandingPage() {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("Login error:", error.message);
+      setError(error.message);
     }
   };
 
   const handleFormRedirect = () => {
-    router.push(
-      "https://docs.google.com/forms/d/1_tdk6BvpHvKqWZQhZJ-7D9i6GSC2fngkg3c62vyPYzc/viewform?edit_requested=true"
-    );
+    window.location.href = "https://docs.google.com/forms/d/1_tdk6BvpHvKqWZQhZJ-7D9i6GSC2fngkg3c62vyPYzc/viewform?edit_requested=true";
   };
 
   if (loading || checkingForm) {
@@ -122,14 +121,15 @@ export default function LandingPage() {
           <h1 className="text-6xl font-bold font-palisade bg-transparent text-white p-4 rounded-2xl mb-6">
             The one stop solution for all your violin learning needs.
           </h1>
-
+          {error && (
+            <p className="text-red-500 mb-4">Error: {error}</p>
+          )}
           <button
             className="bg-green-600 m-4 hover:bg-blue-700 hover:cursor-pointer px-6 py-3 rounded text-white font-bold"
             onClick={handleFormRedirect}
           >
             For New Students
           </button>
-
           {!user && (
             <button
               onClick={handleLogin}
