@@ -77,7 +77,7 @@ export default function LandingPage() {
           }
         } catch (error) {
           console.error("Error checking form submission:", error);
-          router.push("/complete-form");
+          router.push("/portfolio");
         } finally {
           setCheckingForm(false);
         }
