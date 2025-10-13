@@ -62,7 +62,8 @@ export default function LandingPage() {
           });
 
           if (!response.ok) {
-            throw new Error(`API error: ${response.status} ${response.statusText}`);
+            const errorData = await response.json();
+            throw new Error(`API error: ${response.status} ${errorData.details || response.statusText}`);
           }
 
           const data = await response.json();
