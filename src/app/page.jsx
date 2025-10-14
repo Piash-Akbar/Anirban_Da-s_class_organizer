@@ -172,60 +172,111 @@ export default function Portfolio() {
         </section>
 
         {/* Gurus and Lineage Section */}
-        <section id="gurus" className="py-20 px-4 md:px-20 bg-gray-800">
-          <div className="max-w-5xl mx-auto">
-            <h2 className={`text-8xl p-4 font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in animate-fade-out ${greatVibes.className}`}>Gurus and Lineage</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              <div className="flex flex-col items-center">
-                <img 
-                  src="/ABBaba.jpg" 
-                  alt="Guru Jitesh Bhattacharjee" 
-                  className="rounded-lg shadow-md w-full max-w-xs object-cover transform hover:scale-105 transition-all duration-300" 
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=Guru+Image+Not+Found'; }}
-                />
-                <p className="mt-4 text-sm text-gray-300 text-center">Jitesh Bhattacharjee - Tabla Mentor</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <img 
-                  src="/NBRS.jpg" 
-                  alt="Guru Shri Supratik Sengupta" 
-                  className="rounded-lg shadow-md w-full max-w-xs object-cover transform hover:scale-105 transition-all duration-300" 
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=Guru+Image+Not+Found'; }}
-                />
-                <p className="mt-4 text-sm text-gray-300 text-center">Pt. Nikhil Banerjee | Pt. Ravi Shankar</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <img 
-                  src="/Gurus.jpg" 
-                  alt="Guru Dr. Sisirkana Dhar Chowdhury" 
-                  className="rounded-lg shadow-md w-full max-w-xs object-cover transform hover:scale-105 transition-all duration-300" 
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=Guru+Image+Not+Found'; }}
-                />
-                <p className="mt-4 text-sm text-gray-300 text-center">Pt. Nikhil Banerjee | Pt. Ravi Shankar</p>
-              </div>
-            </div>
-            <div className="bg-gray-900 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 animate-pulse-card" style={{ animationDelay: '200ms' }}>
-              <p className="text-lg leading-relaxed text-gray-200 font-light animate-fade-in animate-fade-out" style={{ animationDelay: '200ms' }}>
-              The seeds of music were sown in Anirban even before he developed a conscious memory of his own. Anirban has famously said that he has no recollection of not knowing Teentaal, Ektaal, Jhaptaal, Rupak Taal, Keherwa or Dadra. The credit for this goes entirely to his father, Shri Jitesh Bhattacharjee, who, despite being an engineer by profession, is an accomplished Tabla artist who has had the great fortune of accompanying legends like Pandit Hariprasad Chaurasia and Vidushi Girija Devi. <br />
 
-Besides rhythmic training, Anirban also learned the basics of melody from his father, who is as adept with Rabindrasangeet and harmonium as he is with the Tabla. <br />
 
-Anirban's training in violin began at the age of 15 under Shri Ashim Dutta of Guwahati, Assam. In recognition of Anirban's prodigious talent, Mr. Dutta chose to not train Anirban within a mere ten months of starting to teach him, and handed him over to Shri Manoj Baruah, a virtuoso who had already compounded manifold the popularity of the violin in the North-East. A disciple of the legendary Dr. Sisirkana Dhar Choudhury of the Senia-Maihar Gharana, Shri Manoj Baruah did not fail to see the immense potential that lay dormant in his new student, and almost immediately began educating Anirban in advanced techniques of the violin. This is an association that lasted nearly a decade, where Anirban learned not only the nitty-gritties of Tantrakari violin-playing, but also a lot of Gayaki-ang as well as the difference between performing classical music on stage and playing in recording sessions for commercial projects. Anirban still emphasises that he is yet to see a smarter violin session artist than Manoj Ji. <br />
+{/* Enhanced Gurus and Lineage Section */}
+<section id="gurus" className="py-20 px-4 md:px-20 bg-gradient-to-b from-gray-800 to-gray-900 relative overflow-hidden">
+  {/* Subtle background pattern */}
+  <div className="absolute inset-0 opacity-10">
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,#fbbf24_0%,transparent_50%),radial-gradient(circle_at_75%_75%,#ec4899_0%,transparent_50%)]"></div>
+  </div>
+  
+  <div className="relative max-w-5xl mx-auto">
+    <div className="text-center mb-12">
+      <h2 className={`text-6xl md:text-8xl p-4 font-serif font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in antialiased ${greatVibes.className}`}>
+        Gurus and Lineage
+      </h2>
+      <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-pink-500 mx-auto rounded-full mb-8"></div>
+    </div>
 
-While under the tutelage of Manoj Ji, Anirban moved to Kolkata to pursue a bachelors degree in Mathematics from the renowned St. Xavier's College. During this period, Anirban had the privilege of being mentored by Manoj Ji's legendary Guru, Dr. Sisirkana Dhar Choudhury herself. Sisirkana Ji's Maargdarshan opened up horizons of raga music hitherto unknown to Anirban. Under the legend's tutelage, Anirban was exposed to several rare Ragas that are performed exclusively in the Senia-Maihar Gharana, in addition to being taught rather intricate paths of raga development even in common ragas. <br />
+    {/* Enhanced Content Container */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-gray-900/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/10 p-8 md:p-12 hover:shadow-amber-500/10 transition-all duration-500 animate-fade-in" style={{ animationDelay: '200ms' }}>
+      
+      {/* Text Content with Better Typography */}
+      <div className="space-y-6">
+        <div className="space-y-4">
+          <p className="text-lg leading-relaxed text-gray-200 font-light">
+            Embark on a musical odyssey guided by the luminaries of{' '}
+            <span className="text-amber-400 font-semibold">Hindustani Classical Music</span>!
+          </p>
+          <p className="text-gray-300">
+            Anirban Bhattacharjee's artistry is a tapestry woven from the teachings of revered gurus. From the rhythmic foundations laid by his father,{' '}
+            <strong className="text-amber-400">Jitesh Bhattacharjee</strong>, to the intricate violin techniques imparted by{' '}
+            <strong className="text-pink-400">Shri Ashim Dutta</strong> and{' '}
+            <strong className="text-purple-400">Shri Manoj Baruah</strong>, each mentor has sculpted his unique sound.
+          </p>
+          <p className="text-gray-300">
+            The legendary <strong className="text-emerald-400">Dr. Sisirkana Dhar Chowdhury</strong> of the Senia Maihar Gharana infused his music with soulful depth, while{' '}
+            <strong className="text-orange-400">Shri Supratik Sengupta</strong> of the Senia Shahjahanpur Gharana added virtuosic finesse. Under the tutelage of the late{' '}
+            <strong className="text-rose-400">Dr. Swarna Khuntia</strong>, a disciple of Dr. N. Rajam, Anirban mastered the Gayaki style, blending melody with emotion.
+          </p>
+          <p className="text-gray-300 italic">
+            This illustrious lineage fuels his performances with a celestial spark, resonating across time and tradition.
+          </p>
+        </div>
+        
+        {/* Read More Button */}
+        <div className="pt-4">
+          <a 
+            href="/gurus-lineage"
+            className="inline-flex items-center bg-gradient-to-r from-amber-500 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-gray-900 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-amber-500/25 transition-all duration-300 transform hover:scale-105 group"
+          >
+            <span>Read More About the Lineage</span>
+            <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
 
-Pandit V.G. Jog was a pioneering figure in Tantrakari-ang violin playing, and Anirban received exposure to Pandit Jog's perspectives from Prof. Biswajit Roy Choudhury, one of Pandit Jog's several illustrious disciples. <br />
-
-Even though almost the entirety of Anirban's training has been in the Tantrakari system, his formative training ensured that the Gayaki method was never too far from his periphery of vision. In particular, Dr. N. Rajam's music left a deep impression in Anirban's mind. So, he sought the guidance of Dr. Swarna Khuntia, a celebrated disciple of Amma Ji (as Dr. Rajam is called by everyone in her lineage), and Swarna Ji was more than happy to oblige. This turned out to be the final piece in cementing Anirban's very individual style of violin playing - the unprecedented hybrid of the Tantrakari and Gayaki systems that his audience is now witness to. <br />
-
-Anirban has been a lifelong fan of the music of Pandit Nikhil Banerjee and Pandit Ravi Shankar. So, it is no surprise that Sitar repertoire would become a key component in his delivery of the Vidya imparted to him by his violin Gurus. To develop an in-depth understanding of the music of these legends, Anirban came under the tutelage of Shri Supratik Sengupta, who is himself an amalgamation of thorough Taalim received from various sources. Even though he is primarily known today as a torch-bearing disciple of the legendary Sarod maestro of Senia-Shahjahanpur, Pandit Buddhadev Dasgupta, his training in Sitar comes from Gurus like Pandit Debaprasad Chakraborty, Pandit Ajoy Sinha Roy and Shri Pradeep Kumar Chakraborty. It is under Supratik Ji's decade-long guidance that Anirban's classical repertoire took its current form, and continues to explore further avenues.              </p>
-            </div>
+      {/* Enhanced Image Section */}
+      <div className="relative flex justify-center">
+        <div className="relative group">
+          <img 
+            src="/Gurus.jpg" 
+            alt="Anirban's Gurus Lineage" 
+            className="rounded-xl shadow-xl w-full max-w-md lg:max-w-lg object-cover transform group-hover:scale-105 transition-all duration-500 border-4 border-white/10"
+            onError={(e) => { e.target.src = 'https://via.placeholder.com/500x400?text=Gurus+Lineage'; }}
+          />
+          {/* Decorative overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          {/* Lineage badge */}
+          <div className="absolute top-4 right-4 bg-amber-500/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-gray-900 border border-white/20">
+            Sacred Lineage
           </div>
-        </section>
+          {/* Guru icons overlay */}
+          <div className="absolute bottom-4 left-4 flex space-x-2">
+            <div className="w-3 h-3 bg-amber-400 rounded-full"></div>
+            <div className="w-3 h-3 bg-pink-400 rounded-full animate-pulse"></div>
+            <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
+            <div className="w-3 h-3 bg-emerald-400 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Guru Highlights - Small Cards */}
+    <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-12">
+      {[
+        { name: "Jitesh Bhattacharjee", color: "bg-amber-500" },
+        { name: "Shri Ashim Dutta", color: "bg-blue-500" },
+        { name: "Shri Manoj Baruah", color: "bg-purple-500" },
+        { name: "Dr. Sisirkana Dhar", color: "bg-emerald-500" },
+        { name: "Shri Supratik Sengupta", color: "bg-orange-500" },
+        { name: "Dr. Swarna Khuntia", color: "bg-rose-500" }
+      ].map((guru, index) => (
+        <div key={index} className={`${guru.color} p-3 rounded-lg text-center text-white text-xs font-medium hover:scale-110 transition-transform duration-300 animate-fade-in`} style={{ animationDelay: `${300 + index * 100}ms` }}>
+          {guru.name.split(' ').map(word => word.split('')[0]).join('')}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
 
 
         {/* Gallery Section */}
-        <section id="gallery" className="py-20 px-4 md:px-20 bg-gray-900">
+        <section id="playings" className="py-20 px-4 md:px-20 bg-gray-900">
           <div className="max-w-6xl mx-auto">
             <h2 className={`text-6xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in p-4 antialiased ${greatVibes.className}`}>Discography</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
