@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState } from "react";
 import Navbar from "./navbar/navbar";
-import ConcertCard from "./components/ConcertCards";
-import { db } from "./firebaseConfig";
+import ConcertCard from "./components/ConcertCards"; // Ensure this path is correct
+import { db } from "./firebaseConfig"; // Ensure this import and config are correct
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
 import { Great_Vibes } from "next/font/google";
@@ -12,9 +12,6 @@ const greatVibes = Great_Vibes({
   weight: "400", // ✅ only available weight
   variable: "--font-great-vibes",
 });
-
-
-
 
 // Utility function to format date
 const formatDate = (date) => {
@@ -40,6 +37,7 @@ const formatDate = (date) => {
 export default function Portfolio() {
   const [concerts, setConcerts] = useState([]);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Added loading state
 
   // Fetch upcoming concerts
   useEffect(() => {
@@ -60,6 +58,8 @@ export default function Portfolio() {
       } catch (err) {
         console.error("Error fetching concerts:", err);
         setError("Failed to load upcoming concerts.");
+      } finally {
+        setIsLoading(false); // Set loading to false once fetch is complete (or failed)
       }
     };
     fetchConcerts();
@@ -99,7 +99,9 @@ export default function Portfolio() {
         {/* About Section */}
         <section id="about" className="py-20 px-4 md:px-20 bg-gray-800">
           <div className="max-w-5xl mx-auto">
-            <h2 className={`text-6xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in p-4 antialiased ${greatVibes.className}`}>Biography</h2>
+          <h2 className={`text-6xl md:text-8xl p-4 font-serif font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in antialiased ${greatVibes.className}`}>
+                Biography
+              </h2>
 
             {/* First Paragraph */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 items-center bg-gray-900 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 animate-pulse-card animate-fade-in" style={{ animationDelay: '200ms' }}>
@@ -172,108 +174,103 @@ export default function Portfolio() {
         </section>
 
         {/* Gurus and Lineage Section */}
-
-
-{/* Enhanced Gurus and Lineage Section */}
-<section id="gurus" className="py-20 px-4 md:px-20 bg-gradient-to-b from-gray-800 to-gray-900 relative overflow-hidden">
-  {/* Subtle background pattern */}
-  <div className="absolute inset-0 opacity-10">
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,#fbbf24_0%,transparent_50%),radial-gradient(circle_at_75%_75%,#ec4899_0%,transparent_50%)]"></div>
-  </div>
-  
-  <div className="relative max-w-5xl mx-auto">
-    <div className="text-center mb-12">
-      <h2 className={`text-6xl md:text-8xl p-4 font-serif font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in antialiased ${greatVibes.className}`}>
-        Gurus and Lineage
-      </h2>
-      <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-pink-500 mx-auto rounded-full mb-8"></div>
-    </div>
-
-    {/* Enhanced Content Container */}
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-gray-900/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/10 p-8 md:p-12 hover:shadow-amber-500/10 transition-all duration-500 animate-fade-in" style={{ animationDelay: '200ms' }}>
-      
-      {/* Text Content with Better Typography */}
-      <div className="space-y-6">
-        <div className="space-y-4">
-          <p className="text-lg leading-relaxed text-gray-200 font-light">
-            Embark on a musical odyssey guided by the luminaries of{' '}
-            <span className="text-amber-400 font-semibold">Hindustani Classical Music</span>!
-          </p>
-          <p className="text-gray-300">
-            Anirban Bhattacharjee's artistry is a tapestry woven from the teachings of revered gurus. From the rhythmic foundations laid by his father,{' '}
-            <strong className="text-amber-400">Jitesh Bhattacharjee</strong>, to the intricate violin techniques imparted by{' '}
-            <strong className="text-pink-400">Shri Ashim Dutta</strong> and{' '}
-            <strong className="text-purple-400">Shri Manoj Baruah</strong>, each mentor has sculpted his unique sound.
-          </p>
-          <p className="text-gray-300">
-            The legendary <strong className="text-emerald-400">Dr. Sisirkana Dhar Chowdhury</strong> of the Senia Maihar Gharana infused his music with soulful depth, while{' '}
-            <strong className="text-orange-400">Shri Supratik Sengupta</strong> of the Senia Shahjahanpur Gharana added virtuosic finesse. Under the tutelage of the late{' '}
-            <strong className="text-rose-400">Dr. Swarna Khuntia</strong>, a disciple of Dr. N. Rajam, Anirban mastered the Gayaki style, blending melody with emotion.
-          </p>
-          <p className="text-gray-300 italic">
-            This illustrious lineage fuels his performances with a celestial spark, resonating across time and tradition.
-          </p>
-        </div>
-        
-        {/* Read More Button */}
-        <div className="pt-4">
-          <a 
-            href="/gurus-lineage"
-            className="inline-flex items-center bg-gradient-to-r from-amber-500 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-gray-900 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-amber-500/25 transition-all duration-300 transform hover:scale-105 group"
-          >
-            <span>Read More About the Lineage</span>
-            <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      {/* Enhanced Image Section */}
-      <div className="relative flex justify-center">
-        <div className="relative group">
-          <img 
-            src="/Gurus.jpg" 
-            alt="Anirban's Gurus Lineage" 
-            className="rounded-xl shadow-xl w-full max-w-md lg:max-w-lg object-cover transform group-hover:scale-105 transition-all duration-500 border-4 border-white/10"
-            onError={(e) => { e.target.src = 'https://via.placeholder.com/500x400?text=Gurus+Lineage'; }}
-          />
-          {/* Decorative overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          {/* Lineage badge */}
-          <div className="absolute top-4 right-4 bg-amber-500/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-gray-900 border border-white/20">
-            Sacred Lineage
+        <section id="gurus" className="py-20 px-4 md:px-20 bg-gradient-to-b from-gray-900 to-gray-900 relative overflow-hidden">
+          {/* Subtle background pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 "></div>
           </div>
-          {/* Guru icons overlay */}
-          <div className="absolute bottom-4 left-4 flex space-x-2">
-            <div className="w-3 h-3 bg-amber-400 rounded-full"></div>
-            <div className="w-3 h-3 bg-pink-400 rounded-full animate-pulse"></div>
-            <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
-            <div className="w-3 h-3 bg-emerald-400 rounded-full"></div>
+          
+          <div className="relative max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className={`text-6xl md:text-8xl p-4 font-serif font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in antialiased ${greatVibes.className}`}>
+                Gurus and Lineage
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-pink-500 mx-auto rounded-full mb-8"></div>
+            </div>
+
+            {/* Enhanced Content Container */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-gray-900/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/10 p-8 md:p-12 hover:shadow-amber-500/10 transition-all duration-500 animate-fade-in" style={{ animationDelay: '200ms' }}>
+              
+              {/* Text Content with Better Typography */}
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <p className="text-lg leading-relaxed text-gray-200 font-light">
+                    Embark on a musical odyssey guided by the luminaries of{' '}
+                    <span className="text-amber-400 font-semibold">Hindustani Classical Music</span>!
+                  </p>
+                  <p className="text-gray-300">
+                    Anirban Bhattacharjee's artistry is a tapestry woven from the teachings of revered gurus. From the rhythmic foundations laid by his father,{' '}
+                    <strong className="text-amber-400">Jitesh Bhattacharjee</strong>, to the intricate violin techniques imparted by{' '}
+                    <strong className="text-pink-400">Shri Ashim Dutta</strong> and{' '}
+                    <strong className="text-purple-400">Shri Manoj Baruah</strong>, each mentor has sculpted his unique sound.
+                  </p>
+                  <p className="text-gray-300">
+                    The legendary <strong className="text-emerald-400">Dr. Sisirkana Dhar Chowdhury</strong> of the Senia Maihar Gharana infused his music with soulful depth, while{' '}
+                    <strong className="text-orange-400">Shri Supratik Sengupta</strong> of the Senia Shahjahanpur Gharana added virtuosic finesse. Under the tutelage of the late{' '}
+                    <strong className="text-rose-400">Dr. Swarna Khuntia</strong>, a disciple of Dr. N. Rajam, Anirban mastered the Gayaki style, blending melody with emotion.
+                  </p>
+                  <p className="text-gray-300 italic">
+                    This illustrious lineage fuels his performances with a celestial spark, resonating across time and tradition.
+                  </p>
+                </div>
+                
+                {/* Read More Button */}
+                <div className="pt-4">
+                  <a 
+                    href="/gurus-lineage"
+                    className="inline-flex items-center bg-gradient-to-r from-amber-500 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-gray-900 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-amber-500/25 transition-all duration-300 transform hover:scale-105 group"
+                  >
+                    <span>Read More About the Lineage</span>
+                    <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              {/* Enhanced Image Section */}
+              <div className="relative flex justify-center">
+                <div className="relative group">
+                  <img 
+                    src="/Gurus.jpg" 
+                    alt="Anirban's Gurus Lineage" 
+                    className="rounded-xl shadow-xl w-full max-w-md lg:max-w-lg object-cover transform group-hover:scale-105 transition-all duration-500 border-4 border-white/10"
+                    onError={(e) => { e.target.src = 'https://via.placeholder.com/500x400?text=Gurus+Lineage'; }}
+                  />
+                  {/* Decorative overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  {/* Lineage badge */}
+                  <div className="absolute top-4 right-4 bg-amber-500/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-gray-900 border border-white/20">
+                    Sacred Lineage
+                  </div>
+                  {/* Guru icons overlay */}
+                  <div className="absolute bottom-4 left-4 flex space-x-2">
+                    <div className="w-3 h-3 bg-amber-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-pink-400 rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-emerald-400 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Guru Highlights - Small Cards */}
+            <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-12">
+              {[
+                { name: "Jitesh Bhattacharjee", color: "bg-amber-500" },
+                { name: "Shri Ashim Dutta", color: "bg-blue-500" },
+                { name: "Shri Manoj Baruah", color: "bg-purple-500" },
+                { name: "Dr. Sisirkana Dhar", color: "bg-emerald-500" },
+                { name: "Shri Supratik Sengupta", color: "bg-orange-500" },
+                { name: "Dr. Swarna Khuntia", color: "bg-rose-500" }
+              ].map((guru, index) => (
+                <div key={index} className={`${guru.color} p-3 rounded-lg text-center text-white text-xs font-medium hover:scale-110 transition-transform duration-300 animate-fade-in`} style={{ animationDelay: `${300 + index * 100}ms` }}>
+                  {guru.name.split(' ').map(word => word.split('')[0]).join('')}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    {/* Guru Highlights - Small Cards */}
-    <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-12">
-      {[
-        { name: "Jitesh Bhattacharjee", color: "bg-amber-500" },
-        { name: "Shri Ashim Dutta", color: "bg-blue-500" },
-        { name: "Shri Manoj Baruah", color: "bg-purple-500" },
-        { name: "Dr. Sisirkana Dhar", color: "bg-emerald-500" },
-        { name: "Shri Supratik Sengupta", color: "bg-orange-500" },
-        { name: "Dr. Swarna Khuntia", color: "bg-rose-500" }
-      ].map((guru, index) => (
-        <div key={index} className={`${guru.color} p-3 rounded-lg text-center text-white text-xs font-medium hover:scale-110 transition-transform duration-300 animate-fade-in`} style={{ animationDelay: `${300 + index * 100}ms` }}>
-          {guru.name.split(' ').map(word => word.split('')[0]).join('')}
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-
+        </section>
 
         {/* Gallery Section */}
         <section id="playings" className="py-20 px-4 md:px-20 bg-gray-900">
@@ -369,12 +366,21 @@ export default function Portfolio() {
         <section id="events" className="py-20 px-4 md:px-20 bg-gray-800">
           <div className="max-w-4xl mx-auto">
             <h2 className={`text-6xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in p-4 antialiased ${greatVibes.className}`}>Upcoming Performances</h2>
+            
+            {/* Added Loading State */}
+            {isLoading && (
+              <p className="text-gray-300 text-lg italic text-center animate-pulse">
+                Loading performances... 🎻
+              </p>
+            )}
+
             {error && (
               <div className="mb-8 p-4 bg-red-900 bg-opacity-80 backdrop-blur-md text-white rounded-xl shadow-lg animate-fade-in">
                 {error}
               </div>
             )}
-            {concerts.length === 0 ? (
+
+            {!isLoading && concerts.length === 0 ? (
               <p className="text-gray-300 text-lg italic text-center">No upcoming concerts found.</p>
             ) : (
               <div className="space-y-6">
