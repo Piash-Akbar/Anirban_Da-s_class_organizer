@@ -4,108 +4,189 @@ import { join } from "path";
 
 export async function POST(request) {
   try {
-    console.log("🚀 API Route HIT: /api/calendar/create");
-    
-    // Debug: Log current working directory
-    console.log("📁 Current working directory:", process.cwd());
-    console.log("📁 Project root files:", require('fs').readdirSync(process.cwd()).slice(0, 10).join(', '));
-    
-    const requestData = await request.json();
-    console.log("📥 Request data:", requestData.summary);
+    console.log("🚀 API Route: /api/calendar/create - Environment:", process.env.NODE_ENV);
 
-    // Debug service account file
-    const serviceAccountPath = join(process.cwd(), "service-account.json");
-    console.log("🔍 Looking for service account at:", serviceAccountPath);
-    
-    // Check if file exists
-    const fileExists = existsSync(serviceAccountPath);
-    console.log("✅ File exists:", fileExists);
-    
-    if (!fileExists) {
-      // List all files in cwd to debug
-      const files = require('fs').readdirSync(process.cwd());
-      console.log("📋 All files in cwd:", files.filter(f => f.includes('service') || f.includes('json')).join(', '));
-      
-      // Try alternative paths
-      const altPaths = [
-        join(process.cwd(), "../service-account.json"),
-        join(process.cwd(), "./service-account.json"),
-        "/home/1.Study/MUSIC_CLASS/class_organizer/service-account.json"
-      ];
-      
-      for (const path of altPaths) {
-        console.log("🔍 Trying alternative path:", path, "exists:", existsSync(path));
-      }
-      
+    // Parse request
+    let requestData;
+    try {
+      requestData = await request.json();
+    } catch {
+      return Response.json(
+        { success: false, message: "Invalid JSON request" },
+        { status: 400 }
+      );
+    }
+
+    const { summary, description, startDateTime, endDateTime, timeZone } = requestData;
+
+    if (!summary || !startDateTime || !endDateTime) {
+      return Response.json(
+        { success: false, message: "Missing required fields: summary, startDateTime, endDateTime" },
+        { status: 400 }
+      );
+    }
+
+    // Method 1: Try environment variables first (Vercel/Production)
+    let serviceAccount = buildServiceAccountFromEnv();
+
+    // Method 2: Fallback to local file (Development)
+    if (!serviceAccount?.client_email) {
+      console.log("🔍 Env vars not found, trying local service-account.json");
+      serviceAccount = await loadServiceAccountFromFile();
+    }
+
+    if (!serviceAccount?.client_email) {
       return Response.json(
         { 
           success: false, 
-          message: "Service account file not found",
-          debug: {
-            cwd: process.cwd(),
-            expectedPath: serviceAccountPath,
-            exists: fileExists,
-            filesInRoot: files.slice(0, 20)
+          message: "Google Cloud credentials not configured",
+          debug: { 
+            hasEnv: !!process.env.GCP_CLIENT_EMAIL,
+            hasLocalFile: existsSync(join(process.cwd(), "service-account.json"))
           }
         },
         { status: 500 }
       );
     }
 
-    // Read file
-    const rawData = readFileSync(serviceAccountPath, "utf8");
-    console.log("📄 File size:", rawData.length, "bytes");
-    
-    let serviceAccount;
-    try {
-      serviceAccount = JSON.parse(rawData);
-      console.log("✅ Service account loaded:", serviceAccount.client_email);
-    } catch (parseError) {
-      console.error("❌ JSON Parse error:", parseError.message);
-      console.log("📄 First 200 chars of file:", rawData.substring(0, 200));
-      throw parseError;
-    }
+    console.log("✅ Using service account:", serviceAccount.client_email);
 
-    // Rest of the code...
-    const { summary, startDateTime, endDateTime, timeZone } = requestData;
-
-    if (!summary || !startDateTime || !endDateTime) {
-      return Response.json({ success: false, message: "Missing required fields" }, { status: 400 });
-    }
-
+    // Google Auth
     const auth = new google.auth.GoogleAuth({
       credentials: serviceAccount,
-      scopes: ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.events"],
+      scopes: [
+        "https://www.googleapis.com/auth/calendar",
+        "https://www.googleapis.com/auth/calendar.events"
+      ],
     });
 
     const calendar = google.calendar({ version: "v3", auth });
     const calendarId = process.env.GOOGLE_CALENDAR_ID;
 
     if (!calendarId) {
-      return Response.json({ success: false, message: "GOOGLE_CALENDAR_ID not set" }, { status: 500 });
+      return Response.json(
+        { success: false, message: "GOOGLE_CALENDAR_ID not configured" },
+        { status: 500 }
+      );
     }
 
+    // Create event
     const event = {
       summary: summary.substring(0, 100),
-      description: "Music class session",
-      start: { dateTime: startDateTime, timeZone: timeZone || "Asia/Dhaka" },
-      end: { dateTime: endDateTime, timeZone: timeZone || "Asia/Dhaka" },
-      reminders: { useDefault: false, overrides: [{ method: "popup", minutes: 10 }] },
+      description: (description || "Music class session").substring(0, 8000),
+      start: {
+        dateTime: startDateTime,
+        timeZone: timeZone || "Asia/Dhaka"
+      },
+      end: {
+        dateTime: endDateTime,
+        timeZone: timeZone || "Asia/Dhaka"
+      },
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: "email", minutes: 24 * 60 },
+          { method: "popup", minutes: 10 }
+        ]
+      }
     };
 
-    const response = await calendar.events.insert({ calendarId, requestBody: event });
+    console.log("📅 Creating event:", summary);
+    const response = await calendar.events.insert({
+      calendarId,
+      requestBody: event,
+    });
+
+    console.log("✅ Event created:", response.data.id);
 
     return Response.json({
       success: true,
+      message: "Event created successfully",
       eventId: response.data.id,
-      eventLink: response.data.htmlLink,
+      eventLink: response.data.htmlLink
     });
 
   } catch (error) {
-    console.error("❌ Full error:", error);
-    return Response.json(
-      { success: false, message: error.message, stack: error.stack },
-      { status: 500 }
-    );
+    console.error("❌ Calendar API Error:", {
+      message: error.message,
+      code: error.code,
+      status: error.status
+    });
+    
+    const status = error.code === 403 ? 403 : 
+                   error.code === 401 ? 401 : 
+                   error.code === 404 ? 404 : 500;
+
+    return Response.json({
+      success: false,
+      message: getErrorMessage(error),
+      code: error.code
+    }, { status });
   }
+}
+
+// Build service account from environment variables
+function buildServiceAccountFromEnv() {
+  const privateKey = process.env.GCP_PRIVATE_KEY;
+  
+  if (!privateKey || !process.env.GCP_CLIENT_EMAIL) {
+    return null;
+  }
+
+  // Fix newlines in private key (Vercel stores \n as literal characters)
+  const fixedPrivateKey = privateKey.replace(/\\n/g, '\n');
+  
+  return {
+    type: process.env.GCP_TYPE || "service_account",
+    project_id: process.env.GCP_PROJECT_ID,
+    private_key_id: process.env.GCP_PRIVATE_KEY_ID,
+    private_key: fixedPrivateKey,
+    client_email: process.env.GCP_CLIENT_EMAIL,
+    client_id: process.env.GCP_CLIENT_ID,
+    auth_uri: process.env.GCP_AUTH_URI || "https://accounts.google.com/o/oauth2/auth",
+    token_uri: process.env.GCP_TOKEN_URI || "https://oauth2.googleapis.com/token",
+    auth_provider_x509_cert_url: process.env.GCP_AUTH_PROVIDER_X509_CERT_URL || "https://www.googleapis.com/oauth2/v1/certs",
+    client_x509_cert_url: process.env.GCP_CLIENT_X509_CERT_URL,
+    universe_domain: process.env.GCP_UNIVERSE_DOMAIN || "googleapis.com",
+  };
+}
+
+// Load from local file (development fallback)
+async function loadServiceAccountFromFile() {
+  try {
+    const serviceAccountPath = join(process.cwd(), "service-account.json");
+    
+    if (!existsSync(serviceAccountPath)) {
+      console.log("❌ Local service-account.json not found");
+      return null;
+    }
+
+    const rawData = readFileSync(serviceAccountPath, "utf8");
+    const serviceAccount = JSON.parse(rawData);
+    
+    if (!serviceAccount.client_email) {
+      console.error("❌ Invalid service account file: missing client_email");
+      return null;
+    }
+
+    console.log("✅ Loaded local service account:", serviceAccount.client_email);
+    return serviceAccount;
+  } catch (error) {
+    console.error("❌ Failed to load local service account:", error.message);
+    return null;
+  }
+}
+
+// User-friendly error messages
+function getErrorMessage(error) {
+  if (error.code === 403) {
+    return "Calendar access denied. Ensure service account has 'Make changes to events' permission on the calendar.";
+  }
+  if (error.code === 401) {
+    return "Authentication failed. Check service account credentials.";
+  }
+  if (error.code === 404) {
+    return "Calendar not found. Check GOOGLE_CALENDAR_ID.";
+  }
+  return error.message || "Failed to create calendar event";
 }
