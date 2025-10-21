@@ -18,12 +18,17 @@ import {
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "../loading/loadingSpinner";
+import dynamic from "next/dynamic";
+import "react-datepicker/dist/react-datepicker.css"; // Import react-datepicker CSS
+
+// Dynamically import DatePicker to avoid SSR issues
+const DatePicker = dynamic(() => import("react-datepicker"), { ssr: false });
 
 export default function AdminPage() {
   const [classRequests, setClassRequests] = useState([]);
   const [creditRequests, setCreditRequests] = useState([]);
   const [noticeText, setNoticeText] = useState("");
-  const [concertData, setConcertData] = useState({ venue: "", date: "", location: "" });
+  const [concertData, setConcertData] = useState({ venue: "", date: "", time: "", location: "" });
   const [error, setError] = useState(null);
   const [approving, setApproving] = useState({});
   const [loading, setLoading] = useState(true);
@@ -290,16 +295,35 @@ export default function AdminPage() {
           throw new Error(`${userName} doesn't have enough credits (needs 1)`);
         }
 
-        // Use batch transaction for atomicity
-        const batch = writeBatch(db);
-        batch.update(userDocRef, { credits: increment(-1) });
-        batch.update(requestDocRef, { 
-          status: "approved",
-          approvedAt: new Date().toISOString()
-        });
-        await batch.commit();
+        // Check if user is already in guest list
+        const guestQuery = query(collection(db, "guestList"), where("userId", "==", actualUid));
+        const guestSnap = await getDocs(guestQuery);
+        if (!guestSnap.empty) {
+          console.warn(`⚠️ User ${userName} already in guest list`);
+        } else {
+          // Use batch transaction for atomicity
+          const batch = writeBatch(db);
+          batch.update(userDocRef, { credits: increment(-1) });
+          batch.update(requestDocRef, { 
+            status: "approved",
+            approvedAt: new Date().toISOString()
+          });
 
-        console.log("✅ Class request approved for", userName);
+          // Add to guest list
+          const guestListRef = doc(collection(db, "guestList"));
+          batch.set(guestListRef, {
+            userId: actualUid,
+            displayName: userName,
+            classRequestId: id,
+            addedAt: new Date().toISOString(),
+            createdBy: "admin"
+          });
+
+          await batch.commit();
+
+          console.log("✅ Class request approved for", userName);
+          console.log("✅ Added to guest list:", userName);
+        }
 
         // Create calendar event (non-blocking)
         if (date && time) {
@@ -310,7 +334,7 @@ export default function AdminPage() {
             }
           } catch (calendarError) {
             console.error("⚠️ Calendar creation failed:", calendarError);
-            setError(`Class approved for ${userName}, but calendar event failed: ${calendarError.message}`);
+            setError(`Class approved for ${userName} and added to guest list, but calendar event failed: ${calendarError.message}`);
           }
         } else {
           console.warn("⚠️ No date/time provided, skipping calendar event");
@@ -373,8 +397,8 @@ export default function AdminPage() {
   // 🔹 Post Concert
   const postConcert = async (e) => {
     e.preventDefault();
-    const { venue, date, location } = concertData;
-    if (!venue.trim() || !date.trim() || !location.trim()) {
+    const { venue, date, time, location } = concertData;
+    if (!venue.trim() || !date.trim() || !time.trim() || !location.trim()) {
       setError("All concert fields are required.");
       return;
     }
@@ -382,11 +406,12 @@ export default function AdminPage() {
       await addDoc(collection(db, "upcomingConcerts"), {
         venue: venue.trim(),
         date: date.trim(),
+        time: time.trim(),
         location: location.trim(),
         createdAt: new Date().toISOString(),
         createdBy: "admin",
       });
-      setConcertData({ venue: "", date: "", location: "" });
+      setConcertData({ venue: "", date: "", time: "", location: "" });
       setError(null);
       console.log("✅ Concert posted");
     } catch (error) {
@@ -399,6 +424,17 @@ export default function AdminPage() {
     const { name, value } = e.target;
     setConcertData((prev) => ({ ...prev, [name]: value }));
     setError(null); // Clear error on input
+  };
+
+  const handleDateChange = (date) => {
+    if (date) {
+      const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD
+      const timeStr = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`; // HH:MM
+      setConcertData((prev) => ({ ...prev, date: dateStr, time: timeStr }));
+    } else {
+      setConcertData((prev) => ({ ...prev, date: "", time: "" }));
+    }
+    setError(null); // Clear error on date change
   };
 
   const handleNoticeChange = (e) => {
@@ -443,6 +479,47 @@ export default function AdminPage() {
           }
           .animate-pulse-card {
             animation: pulse 3s ease-in-out infinite;
+          }
+          .react-datepicker-wrapper {
+            width: 100%;
+          }
+          .react-datepicker__input-container input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: #374151;
+            color: #fff;
+            border: 1px solid #4B5563;
+            outline: none;
+            transition: all 0.3s ease;
+          }
+          .react-datepicker__input-container input:focus {
+            border-color: #F59E0B;
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.5);
+          }
+          .react-datepicker {
+            background: #1F2937;
+            color: #E5E7EB;
+            border: 1px solid #4B5563;
+          }
+          .react-datepicker__header {
+            background: #374151;
+            border-bottom: 1px solid #4B5563;
+          }
+          .react-datepicker__day--selected,
+          .react-datepicker__day--keyboard-selected,
+          .react-datepicker__time-list-item--selected {
+            background: #F59E0B !important;
+            color: #fff !important;
+          }
+          .react-datepicker__day:hover,
+          .react-datepicker__time-list-item:hover {
+            background: #4B5563;
+          }
+          .react-datepicker__time-container,
+          .react-datepicker__time-box {
+            background: #1F2937;
+            color: #E5E7EB;
           }
         `}</style>
 
@@ -618,16 +695,19 @@ export default function AdminPage() {
                 />
               </div>
               <div>
-                <label htmlFor="date" className="block text-gray-300 font-medium mb-1">
-                  Date
+                <label htmlFor="dateTime" className="block text-gray-300 font-medium mb-1">
+                  Date and Time
                 </label>
-                <input
-                  type="text"
-                  id="date"
-                  name="date"
-                  value={concertData.date}
-                  onChange={handleConcertInputChange}
-                  placeholder="e.g., October 15, 2025 or 2025-10-15"
+                <DatePicker
+                  id="dateTime"
+                  selected={concertData.date && concertData.time ? new Date(`${concertData.date}T${concertData.time}`) : null}
+                  onChange={handleDateChange}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={15}
+                  dateFormat="yyyy-MM-dd HH:mm"
+                  placeholderText="Select date and time"
+                  minDate={new Date()} // Prevent past dates
                   className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all duration-300"
                   required
                 />

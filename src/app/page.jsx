@@ -389,6 +389,7 @@ export default function Portfolio() {
                     key={concert.id}
                     venue={concert.venue}
                     date={concert.date}
+                    time = {concert.time}
                     location={concert.location}
                     style={{ animationDelay: `${index * 100}ms` }}
                   />

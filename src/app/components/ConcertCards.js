@@ -1,4 +1,3 @@
-// ./components/ConcertCard.js
 
 'use client';
 
@@ -10,11 +9,12 @@ import Link from 'next/link';
  * @param {object} props
  * @param {string} props.venue - The name of the performance venue.
  * @param {string} props.date - The formatted date of the concert (e.g., "10/17/2025").
+ * @param {string} props.time - The formatted time of the concert (e.g., "7:30 PM").
  * @param {string} props.location - The city and country of the concert.
  * @param {object} props.style - Inline styles for animation delay.
  * @param {string} props.className - Additional class names for styling.
  */
-export default function ConcertCard({ venue, date, location, style, className = '' }) {
+export default function ConcertCard({ venue, date, time, location, style, className = '' }) {
   // Parse date for elegant display
   const dateObj = new Date(date);
   const options = { 
@@ -26,6 +26,9 @@ export default function ConcertCard({ venue, date, location, style, className = 
   const fullDate = dateObj.toLocaleDateString('en-US', options);
   const day = dateObj.getDate().toString().padStart(2, '0');
   const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
+
+  // Format time (assuming time is provided as a string like "7:30 PM")
+  const formattedTime = time || 'TBA'; // Fallback to 'TBA' if time is not provided
 
   return (
     <div 
@@ -79,11 +82,11 @@ export default function ConcertCard({ venue, date, location, style, className = 
             </div>
             
             {/* Date ribbon */}
-            <div className="absolute -top-2 -right-2 w-16 h-6 bg-gradient-to-r from-amber-500/90 to-rose-500/90 
+            {/* <div className="absolute -top-2 -right-2 w-16 h-6 bg-gradient-to-r from-amber-500/90 to-rose-500/90 
                            rounded-full flex items-center justify-center text-xs font-semibold 
                            text-slate-900 tracking-wide shadow-lg transform rotate-[-15deg]">
               Live
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -96,9 +99,9 @@ export default function ConcertCard({ venue, date, location, style, className = 
             {venue}
           </h3>
           
-          {/* Date */}
+          {/* Date and Time */}
           <p className="text-sm text-amber-200/70 font-light italic tracking-wide">
-            {fullDate}
+            {fullDate} at {formattedTime}
           </p>
           
           {/* Location */}
@@ -124,7 +127,7 @@ export default function ConcertCard({ venue, date, location, style, className = 
           >
             {/* Button content */}
             <span className="relative z-10 tracking-wide uppercase flex items-center">
-              View Details
+              Book Tickets
               <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" 
                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

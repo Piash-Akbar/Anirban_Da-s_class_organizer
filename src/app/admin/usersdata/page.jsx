@@ -48,6 +48,7 @@ export default function AdminPage() {
   const [concerts, setConcerts] = useState([]);
   const [editNotice, setEditNotice] = useState(null);
   const [editConcert, setEditConcert] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(""); // New state for search input
 
   // Logout handler
   const handleLogout = async () => {
@@ -191,7 +192,7 @@ export default function AdminPage() {
       // Fetch users and their last class
       try {
         const usersCollection = collection(db, "users");
-        const usersQuery = query(usersCollection, where("role", "==", "user"));
+        const usersQuery = query(usersCollection, where("role", "==", "student"));
         const usersSnapshot = await getDocs(usersQuery);
         const usersData = usersSnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -269,6 +270,12 @@ export default function AdminPage() {
     return () => unsubscribe();
   }, [router]);
 
+  // Filter users based on search query
+  const filteredUsers = users.filter((user) =>
+    (user.displayName || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (user.email || "").toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex items-center justify-center">
@@ -313,13 +320,23 @@ export default function AdminPage() {
           {/* Registered Users Section */}
           <section className="mb-12">
             <h2 className="text-3xl font-serif font-semibold mb-6 text-amber-400 animate-fade-in">
-              Registered Users
+              Students
             </h2>
-            {users.length === 0 ? (
-              <p className="text-gray-300 text-lg italic">No users found.</p>
+            {/* Search Bar */}
+            <div className="mb-6">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search students by name or email..."
+                className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all duration-300"
+              />
+            </div>
+            {filteredUsers.length === 0 ? (
+              <p className="text-gray-300 text-lg italic">No students found matching your search.</p>
             ) : (
               <div className="space-y-6">
-                {users.map((u, index) => (
+                {filteredUsers.map((u, index) => (
                   <div
                     key={u.id}
                     className="bg-gray-800 bg-opacity-90 backdrop-blur-md p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse-card animate-fade-in"
