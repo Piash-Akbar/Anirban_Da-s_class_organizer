@@ -85,7 +85,7 @@ export default function AdminDashboard() {
         const uid = req.uid || req.targetUserId;
         const userSnap = await getDoc(doc(db, "users", uid));
         const user = userSnap.data();
-        if ((user.credits ?? 0) < 1) throw new Error("Not enough credits");
+        // if ((user.credits ?? 0) < 1) throw new Error("Not enough credits");
 
         const batch = writeBatch(db);
         batch.update(doc(db, "users", uid), { credits: increment(-1) });
