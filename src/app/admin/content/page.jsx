@@ -60,6 +60,15 @@ export default function AdminContent() {
     setConcerts(snap.docs.map(d => ({ id: d.id, ...d.data(), createdAt: fmt(d.data().createdAt) })));
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/");
+    } catch {
+      setError("Logout failed");
+    }
+  };
+
   /* ────── NOTICE HANDLERS ────── */
   const postNotice = async () => {
     if (!noticeText.trim()) return setError("Notice cannot be empty");
@@ -156,6 +165,15 @@ export default function AdminContent() {
           {error && <div className="mb-6 p-4 bg-red-900/80 rounded-xl">{error}</div>}
 
           {/* ────── ADD CONCERT ────── */}
+          <div className="flex gap-4 justify-center mb-12">
+            <button onClick={handleLogout} className="text-amber-400 bg-red-900/80 px-4 py-2 rounded-xl hover:cursor-pointer">Logout</button>
+            <button
+              onClick={() => router.push("/admin")}
+              className="bg-gradient-to-r from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600"
+            >
+              Back to Dashboard
+            </button>
+          </div>
           <section className="mb-12">
             <h2 className="text-3xl font-serif mb-4 text-amber-400">Add Upcoming Concert</h2>
             <form onSubmit={postConcert} className="bg-gray-800/90 backdrop-blur p-6 rounded-xl space-y-4">
@@ -367,7 +385,8 @@ export default function AdminContent() {
             )}
           </section>
 
-          <div className="text-center">
+          <div className="flex gap-4 justify-center mb-12">
+            <button onClick={handleLogout} className="text-amber-400 bg-red-900/80 px-4 py-2 rounded-xl hover:cursor-pointer">Logout</button>
             <button
               onClick={() => router.push("/admin")}
               className="bg-gradient-to-r from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600"

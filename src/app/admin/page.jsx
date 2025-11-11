@@ -130,6 +130,16 @@ export default function AdminDashboard() {
     }
   };
 
+  /* -------Logout------- */
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/");
+    } catch {
+      setError("Logout failed");
+    }
+  };
+
   /* ────── CALENDAR HELPER ────── */
   const createCalendarEvent = async (summary, date, time) => {
     const start = parseDateTime(date, time);
@@ -188,6 +198,23 @@ export default function AdminDashboard() {
           </h1>
 
           {error && <div className="mb-6 p-4 bg-red-900/80 rounded-xl">{error}</div>}
+
+
+          <div className="flex gap-4 justify-center mb-12">
+            <button onClick={handleLogout} className="text-amber-400 bg-red-900/80 px-4 py-2 rounded-xl hover:cursor-pointer">Logout</button>
+            <button
+              onClick={() => router.push("/admin/content")}
+              className="bg-gradient-to-r from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600"
+            >
+              Content
+            </button>
+          </div>
+
+
+
+
+
+
 
           {/* ────── CLASS REQUESTS ────── */}
           <section className="mb-12">

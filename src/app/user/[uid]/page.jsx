@@ -122,6 +122,43 @@ export default function UserPage() {
     }
   };
 
+  //Latest Class Schedule status with date and time from firestore
+  // const [latestClassSchedule, setLatestClassSchedule] = useState(null);
+  // useEffect(() => {
+  //   const fetchLatestClassSchedule = async () => {
+  //     try {
+  //       const latestClassScheduleQuery = query(
+  //         collection(db, "classesRequests"),
+  //         orderBy("createdAt", "desc"),
+  //         limit(1)
+  //       );
+  //       const latestClassScheduleSnap = await getDocs(latestClassScheduleQuery);
+  //       if (!latestClassScheduleSnap.empty) {
+  //         const latestClassScheduleData = latestClassScheduleSnap.docs[0].data();
+  //         setLatestClassSchedule(latestClassScheduleData);
+  //       } else {
+  //         setLatestClassSchedule(null);
+  //       }
+  //     } catch (err) {
+  //       console.error("Error fetching latest class schedule:", err);
+  //       setError("Failed to fetch latest class schedule.");
+  //     }
+  //   };
+  //   fetchLatestClassSchedule();
+  // }, []);
+
+  // if (latestClassSchedule) {
+  //     const formattedDate = new Date(latestClassSchedule.date).toLocaleDateString("en-CA"); // en-CA gives YYYY-MM-DD
+  //     latestClassSchedule.date = formattedDate;      
+  //     console.log("Latest class schedule:", latestClassSchedule);
+  //   } else {
+  //     console.log("No latest class schedule found.");       
+  //     }
+  
+
+
+
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
@@ -170,8 +207,16 @@ export default function UserPage() {
         >
           {credit >= 0
             ? `You have ${credit} class(es) left`
-            : `You have due for ${Math.abs(credit)} class(es)`}
+            : `Payment due for ${Math.abs(credit)} class(es)`}
         </div>
+
+        {/* Class schedule status: */}
+        {/* <div className="mb-8 bg-gray-800 p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-2">Class Schedule Status:</h2>
+          <p className="text-gray-300">`{latestClassSchedule?.status}`</p>
+          <p className="text-gray-300">`{latestClassSchedule?.date}`</p>
+          <p className="text-gray-300">`{latestClassSchedule?.time}`</p>
+        </div> */}
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
@@ -199,6 +244,7 @@ export default function UserPage() {
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition-opacity duration-300">
             <div className="bg-gray-800/90 p-8 rounded-xl shadow-2xl w-full max-w-md transform transition-transform duration-300 scale-100 hover:scale-105">
               <h2 className="text-2xl font-bold mb-6 text-blue-300">Schedule a Class</h2>
+              <span>According to Indian Standard Time (IST)</span>
               <div className="flex flex-col gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-200 mb-2">Select Date:</label>
@@ -214,7 +260,7 @@ export default function UserPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium  text-gray-200 mb-2">Select Time:</label>
+                  <label className="block text-sm font-medium  text-gray-200 mb-2">Select Time (IST):</label>
                   <input
                     type="time"
                     value={selectedTime}
