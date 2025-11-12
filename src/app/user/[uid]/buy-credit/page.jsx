@@ -64,7 +64,7 @@ export default function BuyCreditPage() {
               onSubmit={handleSubmit}
               className="flex flex-col gap-4 w-full md:w-1/2"
             >
-              <input
+              <input  
                 type="number"
                 placeholder="Number of classes you want to pay for"
                 value={amount}
@@ -109,7 +109,7 @@ export default function BuyCreditPage() {
 
             {/* ===== Right Side: Dynamic Content ===== */}
             <div className="flex flex-col items-center justify-center w-full md:w-1/2 bg-gray-700 p-4 rounded-lg">
-              {paymentMethod === "Upay" && (
+              {paymentMethod === "UPI" && (
                 <div className="text-center">
                   <h2 className="text-xl font-semibold mb-2">
                     Scan QR to Pay via Upay

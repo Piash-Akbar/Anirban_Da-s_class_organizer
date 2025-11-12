@@ -122,38 +122,38 @@ export default function UserPage() {
     }
   };
 
-  //Latest Class Schedule status with date and time from firestore
-  // const [latestClassSchedule, setLatestClassSchedule] = useState(null);
-  // useEffect(() => {
-  //   const fetchLatestClassSchedule = async () => {
-  //     try {
-  //       const latestClassScheduleQuery = query(
-  //         collection(db, "classesRequests"),
-  //         orderBy("createdAt", "desc"),
-  //         limit(1)
-  //       );
-  //       const latestClassScheduleSnap = await getDocs(latestClassScheduleQuery);
-  //       if (!latestClassScheduleSnap.empty) {
-  //         const latestClassScheduleData = latestClassScheduleSnap.docs[0].data();
-  //         setLatestClassSchedule(latestClassScheduleData);
-  //       } else {
-  //         setLatestClassSchedule(null);
-  //       }
-  //     } catch (err) {
-  //       console.error("Error fetching latest class schedule:", err);
-  //       setError("Failed to fetch latest class schedule.");
-  //     }
-  //   };
-  //   fetchLatestClassSchedule();
-  // }, []);
+  // Latest Class Schedule status with date and time from firestore
+  const [latestClassSchedule, setLatestClassSchedule] = useState(null);
+  useEffect(() => {
+    const fetchLatestClassSchedule = async () => {
+      try {
+        const latestClassScheduleQuery = query(
+          collection(db, "classesRequests"),
+          orderBy("createdAt", "desc"),
+          limit(1)
+        );
+        const latestClassScheduleSnap = await getDocs(latestClassScheduleQuery);
+        if (!latestClassScheduleSnap.empty) {
+          const latestClassScheduleData = latestClassScheduleSnap.docs[0].data();
+          setLatestClassSchedule(latestClassScheduleData);
+        } else {
+          setLatestClassSchedule(null);
+        }
+      } catch (err) {
+        console.error("Error fetching latest class schedule:", err);
+        setError("Failed to fetch latest class schedule.");
+      }
+    };
+    fetchLatestClassSchedule();
+  }, []);
 
-  // if (latestClassSchedule) {
-  //     const formattedDate = new Date(latestClassSchedule.date).toLocaleDateString("en-CA"); // en-CA gives YYYY-MM-DD
-  //     latestClassSchedule.date = formattedDate;      
-  //     console.log("Latest class schedule:", latestClassSchedule);
-  //   } else {
-  //     console.log("No latest class schedule found.");       
-  //     }
+  if (latestClassSchedule) {
+      const formattedDate = new Date(latestClassSchedule.date).toLocaleDateString("en-CA"); // en-CA gives YYYY-MM-DD
+      latestClassSchedule.date = formattedDate;      
+      console.log("Latest class schedule:", latestClassSchedule);
+    } else {
+      console.log("No latest class schedule found.");       
+      }
   
 
 
@@ -181,121 +181,176 @@ export default function UserPage() {
 
   return (
     <>
-      <Navbar />
-    <div className="relative min-h-screen flex flex-col items-center justify-center text-center bg-gray-900">
-      <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-30"></div>
+    <Navbar />
 
-      <div className="relative z-10 opacity-90">
+    <div className="relative min-h-screen flex flex-col items-center justify-start bg-gray-900 text-white pt-24 px-4">
+      <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-25"></div>
 
+      <div className="relative z-10 w-full max-w-3xl">
 
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-center">
-          Welcome, {userData.displayName || "User"}
-        </h1>
-
-        <div className="mb-8 bg-gray-800 p-4 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-2">Latest Notice</h2>
-          <p className="text-gray-300">
-            {notice ? notice.text : "No notices available."}
+        {/* Welcome Header */}
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-bold text-blue-300">
+            Welcome, {userData.displayName || "User"} 👋
+          </h1>
+          <p className="text-gray-400 mt-2 text-sm tracking-wide">
+            Manage your classes, check notices, and stay up-to-date
           </p>
         </div>
-
-        <div
-          className={`mt-8 mb-8 justify-center flex items-center p-4 rounded-lg ${
-            credit >= 0 ? "bg-gray-800 text-green-400" : "bg-gray-800 text-red-400"
-          }`}
-        >
-          {credit >= 0
-            ? `You have ${credit} class(es) left`
-            : `Payment due for ${Math.abs(credit)} class(es)`}
-        </div>
-
-        {/* Class schedule status: */}
-        {/* <div className="mb-8 bg-gray-800 p-4 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-2">Class Schedule Status:</h2>
-          <p className="text-gray-300">`{latestClassSchedule?.status}`</p>
-          <p className="text-gray-300">`{latestClassSchedule?.date}`</p>
-          <p className="text-gray-300">`{latestClassSchedule?.time}`</p>
-        </div> */}
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <>
+        {/* buttons */}
+        <div className="flex justify-center gap-4 mb-8">
           <button
             onClick={() => setShowSchedulePopup(true)}
-            className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white px-6 py-3 rounded-md font-medium transition-colors"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
           >
             Schedule a Class
           </button>
           <button
             onClick={handleBuyCredit}
-            className="bg-green-600 hover:bg-green-700 hover:cursor-pointer text-white px-6 py-3 rounded-md font-medium transition-colors"
+            className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
+          >
+            Buy Credits
+          </button>
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+          >
+            Logout
+          </button>
+        </div>    
+        </>
+
+        {/* Latest Notice */}
+        <div className="mb-8 bg-gray-800/80 backdrop-blur-md p-6 rounded-xl shadow-lg border border-gray-700 hover:border-blue-500 transition-all">
+          <h2 className="text-2xl font-semibold text-blue-400 mb-3">
+            Latest Notice
+          </h2>
+          <p className="text-gray-300 leading-relaxed">
+            {notice ? notice.text : "No notices available at the moment."}
+          </p>
+        </div>
+
+        {/* Credit Display */}
+        <div
+          className={`mb-8 p-5 text-center rounded-xl shadow-md border ${
+            credit >= 0
+              ? "bg-green-900/40 text-green-300 border-green-700"
+              : "bg-red-900/40 text-red-300 border-red-700"
+          }`}
+        >
+          <span className="text-lg font-medium">
+            {credit >= 0
+              ? `You have ${credit} class${credit !== 1 ? "es" : ""} left`
+              : `Payment due for ${Math.abs(credit)} class${Math.abs(credit) !== 1 ? "es" : ""}`}
+          </span>
+        </div>
+
+        {/* Class Schedule Status */}
+        <div className="mb-8 bg-gray-800/80 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition-all">
+          <h2 className="text-2xl font-semibold text-purple-400 mb-3">
+            Latest Class Schedule Status
+          </h2>
+          {latestClassSchedule ? (
+            <div className="text-gray-300 space-y-1">
+              <p>
+                <span className="font-semibold text-gray-100">Status:</span>{" "}
+                {latestClassSchedule.status}
+              </p>
+              <p>
+                <span className="font-semibold text-gray-100">Date:</span>{" "}
+                {latestClassSchedule.date}
+              </p>
+              <p>
+                <span className="font-semibold text-gray-100">Time:</span>{" "}
+                {latestClassSchedule.time}
+              </p>
+            </div>
+          ) : (
+            <p className="text-gray-400">No class scheduled yet.</p>
+          )}
+        </div>
+
+        {/* Buttons */}
+        {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            onClick={() => setShowSchedulePopup(true)}
+            className="bg-blue-600 hover:bg-blue-700 inset-0 z-50 px-8 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg"
+          >
+            Schedule a Class
+          </button>
+          <button
+            onClick={handleBuyCredit}
+            className="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg"
           >
             Buy Class
           </button>
           <button
             onClick={handleLogout}
-            className="bg-red-600 hover:bg-red-700 hover:cursor-pointer text-white px-6 py-3 rounded-md font-medium transition-colors"
+            className="bg-red-600 hover:bg-red-700 px-8 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg"
           >
             Logout
           </button>
-        </div>
+        </div> */}
+      </div>
 
-        {/* Schedule Popup */}
-        {showSchedulePopup && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition-opacity duration-300">
-            <div className="bg-gray-800/90 p-8 rounded-xl shadow-2xl w-full max-w-md transform transition-transform duration-300 scale-100 hover:scale-105">
-              <h2 className="text-2xl font-bold mb-6 text-blue-300">Schedule a Class</h2>
-              <span>According to Indian Standard Time (IST)</span>
-              <div className="flex flex-col gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-200 mb-2">Select Date:</label>
-                  <DatePicker
-                    selected={selectedDate}
-                    onChange={(date) => setSelectedDate(date)}
-                    dateFormat="yyyy-MM-dd"
-                    utcOffset={0} // Treat as local time
-                    minDate={new Date()} // Prevent past dates
-                    className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                    placeholderText="Select a date"
-                    />
-                </div>
+      {/* Schedule Popup */}
+      {showSchedulePopup && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm">
+        <div className="bg-gray-800/95 p-8 rounded-xl shadow-2xl w-full max-w-md transform transition-all scale-100 hover:scale-105">
+          <h2 className="text-2xl font-bold mb-6 text-blue-300">Schedule a Class</h2>
+          <span>According to Indian Standard Time (IST)</span>
 
-                <div>
-                  <label className="block text-sm font-medium  text-gray-200 mb-2">Select Time (IST):</label>
-                  <input
-                    type="time"
-                    value={selectedTime}
-                    onChange={(e) => setSelectedTime(e.target.value)}
-                    className="w-full p-3 rounded-lg bg-gray-700 text-white border hover:cursor-text border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                    />
-                </div>
+            <div className="flex flex-col gap-5">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Select Date:
+                </label>
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
+                  dateFormat="yyyy-MM-dd"
+                  minDate={new Date()}
+                  className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-blue-400 outline-none transition"
+                  placeholderText="Select a date"
+                />
+              </div>
 
-                <div className="flex justify-end gap-4 mt-6">
-                  <button
-                    onClick={handleSchedule}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 hover:cursor-pointer rounded-lg font-medium transition-colors duration-200"
-                    >
-                    Submit
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowSchedulePopup(false);
-                      setSelectedDate(null);
-                      setSelectedTime("");
-                    }}
-                    className="bg-gray-600 hover:bg-gray-700 hover:cursor-pointer text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200"
-                  >
-                    Cancel
-                  </button>
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Select Time (IST):
+                </label>
+                <input
+                  type="time"
+                  value={selectedTime}
+                  onChange={(e) => setSelectedTime(e.target.value)}
+                  className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-blue-400 outline-none transition"
+                />
+              </div>
+
+              <div className="flex justify-end gap-4 mt-6">
+                <button
+                  onClick={handleSchedule}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-all hover:shadow-md"
+                >
+                  Submit
+                </button>
+                <button
+                  onClick={() => {
+                    setShowSchedulePopup(false);
+                    setSelectedDate(null);
+                    setSelectedTime("");
+                  }}
+                  className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-medium transition-all hover:shadow-md"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           </div>
-        )}
-      </div>
-
-      </div>
-
+        </div>
+      )}
     </div>
-    </>
+  </>
   );
 }

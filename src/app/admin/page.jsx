@@ -1,11 +1,18 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
-import Navbar from "../navbar/navbar";               // adjust path
-import { auth, db } from "../firebaseConfig";                    // adjust path
+import Navbar from "../navbar/navbar";
+import { auth, db } from "../firebaseConfig";
 import {
-  collection, getDocs, updateDoc, doc, writeBatch, increment,
-  query, where, getDoc
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+  writeBatch,
+  increment,
+  query,
+  where,
+  getDoc,
 } from "firebase/firestore";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -21,10 +28,12 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  /* ────── AUTH & ADMIN CHECK ────── */
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
-      if (!user) { router.push("/"); return; }
+      if (!user) {
+        router.push("/");
+        return;
+      }
       const snap = await getDoc(doc(db, "users", user.uid));
       if (!snap.exists() || snap.data().role !== "admin") {
         router.push("/");
@@ -36,40 +45,40 @@ export default function AdminDashboard() {
     return () => unsub && unsub();
   }, [router]);
 
-  /* ────── FETCHERS ────── */
   const fetchRequests = async () => {
-    // class requests
     const classQ = query(collection(db, "classesRequests"), where("status", "==", "pending"));
     const classSnap = await getDocs(classQ);
-    const classData = await Promise.all(classSnap.docs.map(async (d) => {
-      const data = d.data();
-      const userSnap = data.uid ? await getDoc(doc(db, "users", data.uid)) : null;
-      return { id: d.id, ...data, displayName: userSnap?.data()?.displayName ?? "Unknown" };
-    }));
+    const classData = await Promise.all(
+      classSnap.docs.map(async (d) => {
+        const data = d.data();
+        const userSnap = data.uid ? await getDoc(doc(db, "users", data.uid)) : null;
+        return { id: d.id, ...data, displayName: userSnap?.data()?.displayName ?? "Unknown" };
+      })
+    );
     setClassRequests(classData);
 
-    // credit requests
     const creditQ = query(collection(db, "creditRequests"), where("status", "==", "pending"));
     const creditSnap = await getDocs(creditQ);
-    const creditData = await Promise.all(creditSnap.docs.map(async (d) => {
-      const data = d.data();
-      const userSnap = data.targetUserId ? await getDoc(doc(db, "users", data.targetUserId)) : null;
-      return { id: d.id, ...data, displayName: userSnap?.data()?.displayName ?? "Unknown" };
-    }));
+    const creditData = await Promise.all(
+      creditSnap.docs.map(async (d) => {
+        const data = d.data();
+        const userSnap = data.targetUserId ? await getDoc(doc(db, "users", data.targetUserId)) : null;
+        return { id: d.id, ...data, displayName: userSnap?.data()?.displayName ?? "Unknown" };
+      })
+    );
     setCreditRequests(creditData);
   };
 
   const fetchStudents = async () => {
     const usersQ = query(collection(db, "users"), where("role", "==", "student"));
     const snap = await getDocs(usersQ);
-    const students = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const students = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
     setStudents(students);
   };
 
-  /* ────── APPROVE / DECLINE ────── */
   const approveRequest = async (col, id) => {
     const key = `${col}-${id}`;
-    setApproving(p => ({ ...p, [key]: true }));
+    setApproving((p) => ({ ...p, [key]: true }));
     try {
       const reqRef = doc(db, col, id);
       const reqSnap = await getDoc(reqRef);
@@ -85,52 +94,35 @@ export default function AdminDashboard() {
         const uid = req.uid || req.targetUserId;
         const userSnap = await getDoc(doc(db, "users", uid));
         const user = userSnap.data();
-        // if ((user.credits ?? 0) < 1) throw new Error("Not enough credits");
-
         const batch = writeBatch(db);
         batch.update(doc(db, "users", uid), { credits: increment(-1) });
         batch.update(reqRef, { status: "approved", approvedAt: new Date().toISOString() });
-
-        const gstRef = doc(collection(db, "guestList"));
-        batch.set(gstRef, {
-          userId: uid,
-          displayName: user.displayName,
-          classRequestId: id,
-          addedAt: new Date().toISOString(),
-          createdBy: "admin"
-        });
         await batch.commit();
-
-        // optional calendar
-        if (req.date && req.time) {
-          await createCalendarEvent(`Class: ${user.displayName}`, req.date, req.time);
-        }
       }
       await fetchRequests();
     } catch (e) {
       setError(e.message);
     } finally {
-      setApproving(p => ({ ...p, [key]: false }));
+      setApproving((p) => ({ ...p, [key]: false }));
     }
   };
 
   const declineRequest = async (col, id) => {
     const key = `${col}-${id}`;
-    setApproving(p => ({ ...p, [key]: true }));
+    setApproving((p) => ({ ...p, [key]: true }));
     try {
       await updateDoc(doc(db, col, id), {
         status: "declined",
-        declinedAt: new Date().toISOString()
+        declinedAt: new Date().toISOString(),
       });
       await fetchRequests();
     } catch (e) {
       setError(e.message);
     } finally {
-      setApproving(p => ({ ...p, [key]: false }));
+      setApproving((p) => ({ ...p, [key]: false }));
     }
   };
 
-  /* -------Logout------- */
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -140,42 +132,17 @@ export default function AdminDashboard() {
     }
   };
 
-  /* ────── CALENDAR HELPER ────── */
-  const createCalendarEvent = async (summary, date, time) => {
-    const start = parseDateTime(date, time);
-    const end = new Date(start.getTime() + 60 * 60 * 1000);
-    await fetch("/api/calendar/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        summary,
-        description: `Music class for ${summary}`,
-        startDateTime: start.toISOString(),
-        endDateTime: end.toISOString(),
-        timeZone: "Asia/Dhaka"
-      })
-    });
-  };
-
-  const parseDateTime = (d, t) => {
-    const [hh, mm] = t.split(":").map(Number);
-    const iso = d.includes("-") ? d : d.split("/").reverse().join("-");
-    const dateObj = new Date(`${iso}T${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}:00`);
-    if (isNaN(dateObj)) throw new Error("Invalid date/time");
-    return dateObj;
-  };
-
   const isProcessing = (col, id) => approving[`${col}-${id}`];
 
-  /* ────── FILTERED STUDENTS ────── */
-  const filteredStudents = students.filter(s =>
-    (s.displayName ?? "").toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (s.email ?? "").toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredStudents = students.filter(
+    (s) =>
+      (s.displayName ?? "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (s.email ?? "").toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
         <LoadingSpinner />
       </div>
     );
@@ -184,56 +151,52 @@ export default function AdminDashboard() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white py-12 px-4 md:px-8">
-        <style jsx>{`
-          @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-          .fade { animation: fadeIn 0.8s forwards; }
-          @keyframes pulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.02); } }
-          .pulse { animation: pulse 3s infinite; }
-        `}</style>
+      <div className="relative min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center py-16 px-4">
+        <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-30"></div>
+        <div className="relative z-10 w-full max-w-5xl">
 
-        <div className="max-w-5xl mx-auto">
-          <h1 className="text-4xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 fade">
+          <h1 className="text-4xl font-bold mb-10 text-center bg-gradient-to-r from-amber-400 to-pink-500 bg-clip-text text-transparent">
             Admin Dashboard
           </h1>
 
-          {error && <div className="mb-6 p-4 bg-red-900/80 rounded-xl">{error}</div>}
+          {error && (
+            <div className="mb-6 p-4 bg-red-600/80 rounded-lg text-center">
+              {error}
+            </div>
+          )}
 
-
-          <div className="flex gap-4 justify-center mb-12">
-            <button onClick={handleLogout} className="text-amber-400 bg-red-900/80 px-4 py-2 rounded-xl hover:cursor-pointer">Logout</button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <button
+              onClick={handleLogout}
+              className="bg-red-900/80 hover:bg-red-800 text-amber-400 px-6 py-2 rounded-lg font-medium transition-all duration-200 hover:shadow-lg"
+            >
+              Logout
+            </button>
             <button
               onClick={() => router.push("/admin/content")}
-              className="bg-gradient-to-r from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600"
+              className="bg-gradient-to-r from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600 transition-all duration-200 hover:shadow-lg"
             >
-              Content
+              Manage Content
             </button>
           </div>
 
-
-
-
-
-
-
-          {/* ────── CLASS REQUESTS ────── */}
-          <section className="mb-12">
-            <h2 className="text-3xl font-serif mb-4 text-amber-400">
+          {/* Class Requests */}
+          <section className="bg-gray-800/80 p-6 rounded-xl shadow-xl mb-10 backdrop-blur-md">
+            <h2 className="text-2xl font-semibold mb-4 text-amber-400">
               Pending Class Requests ({classRequests.length})
             </h2>
             {classRequests.length === 0 ? (
               <p className="text-gray-300 italic">No pending requests.</p>
             ) : (
               <div className="space-y-4">
-                {classRequests.map((r, i) => (
+                {classRequests.map((r) => (
                   <div
                     key={r.id}
-                    className="bg-gray-800/90 backdrop-blur p-5 rounded-xl flex justify-between items-center fade"
-                    style={{ animationDelay: `${i * 80}ms` }}
+                    className="bg-gray-900/70 p-4 rounded-lg flex justify-between items-center shadow-lg hover:shadow-amber-500/20 transition-all"
                   >
                     <div>
-                      <p className="font-bold">{r.displayName}</p>
-                      <p className="text-sm text-gray-300">
+                      <p className="font-bold text-white">{r.displayName}</p>
+                      <p className="text-sm text-gray-400">
                         Date: {r.date} | Time: {r.time}
                       </p>
                     </div>
@@ -241,7 +204,7 @@ export default function AdminDashboard() {
                       <button
                         onClick={() => approveRequest("classesRequests", r.id)}
                         disabled={isProcessing("classesRequests", r.id)}
-                        className={`px-4 py-1 rounded text-white ${
+                        className={`px-4 py-2 rounded-lg text-white font-medium ${
                           isProcessing("classesRequests", r.id)
                             ? "bg-gray-600"
                             : "bg-green-600 hover:bg-green-700"
@@ -252,7 +215,7 @@ export default function AdminDashboard() {
                       <button
                         onClick={() => declineRequest("classesRequests", r.id)}
                         disabled={isProcessing("classesRequests", r.id)}
-                        className={`px-4 py-1 rounded text-white ${
+                        className={`px-4 py-2 rounded-lg text-white font-medium ${
                           isProcessing("classesRequests", r.id)
                             ? "bg-gray-600"
                             : "bg-red-600 hover:bg-red-700"
@@ -267,32 +230,31 @@ export default function AdminDashboard() {
             )}
           </section>
 
-          {/* ────── CREDIT REQUESTS ────── */}
-          <section className="mb-12">
-            <h2 className="text-3xl font-serif mb-4 text-amber-400">
+          {/* Credit Requests */}
+          <section className="bg-gray-800/80 p-6 rounded-xl shadow-xl mb-10 backdrop-blur-md">
+            <h2 className="text-2xl font-semibold mb-4 text-amber-400">
               Pending Credit Requests ({creditRequests.length})
             </h2>
             {creditRequests.length === 0 ? (
               <p className="text-gray-300 italic">No pending requests.</p>
             ) : (
               <div className="space-y-4">
-                {creditRequests.map((r, i) => (
+                {creditRequests.map((r) => (
                   <div
                     key={r.id}
-                    className="bg-gray-800/90 backdrop-blur p-5 rounded-xl flex justify-between items-center fade"
-                    style={{ animationDelay: `${i * 80}ms` }}
+                    className="bg-gray-900/70 p-4 rounded-lg flex justify-between items-center shadow-lg hover:shadow-pink-500/20 transition-all"
                   >
                     <div>
-                      <p className="font-bold">{r.displayName}</p>
-                      <p className="text-sm text-gray-300">
-                        {r.amount} classes – {r.message || "no msg"}
+                      <p className="font-bold text-white">{r.displayName}</p>
+                      <p className="text-sm text-gray-400">
+                        {r.amount} classes – {r.message || "No message"}
                       </p>
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => approveRequest("creditRequests", r.id)}
                         disabled={isProcessing("creditRequests", r.id)}
-                        className={`px-4 py-1 rounded text-white ${
+                        className={`px-4 py-2 rounded-lg text-white font-medium ${
                           isProcessing("creditRequests", r.id)
                             ? "bg-gray-600"
                             : "bg-green-600 hover:bg-green-700"
@@ -303,7 +265,7 @@ export default function AdminDashboard() {
                       <button
                         onClick={() => declineRequest("creditRequests", r.id)}
                         disabled={isProcessing("creditRequests", r.id)}
-                        className={`px-4 py-1 rounded text-white ${
+                        className={`px-4 py-2 rounded-lg text-white font-medium ${
                           isProcessing("creditRequests", r.id)
                             ? "bg-gray-600"
                             : "bg-red-600 hover:bg-red-700"
@@ -318,28 +280,27 @@ export default function AdminDashboard() {
             )}
           </section>
 
-          {/* ────── STUDENTS ────── */}
-          <section className="mb-12">
-            <h2 className="text-3xl font-serif mb-4 text-amber-400">Students</h2>
+          {/* Students */}
+          <section className="bg-gray-800/80 p-6 rounded-xl shadow-xl backdrop-blur-md">
+            <h2 className="text-2xl font-semibold mb-4 text-amber-400">Students</h2>
             <input
               type="text"
               placeholder="Search by name or email…"
               value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              className="w-full p-3 mb-4 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full p-3 mb-6 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
             {filteredStudents.length === 0 ? (
               <p className="text-gray-300 italic">No students found.</p>
             ) : (
               <div className="space-y-4">
-                {filteredStudents.map((s, i) => (
+                {filteredStudents.map((s) => (
                   <div
                     key={s.id}
-                    className="bg-gray-800/90 backdrop-blur p-5 rounded-xl fade"
-                    style={{ animationDelay: `${i * 80}ms` }}
+                    className="bg-gray-900/70 p-4 rounded-lg shadow-lg hover:shadow-amber-500/10 transition-all"
                   >
-                    <p className="font-bold">{s.displayName}</p>
-                    <p className="text-sm text-gray-300">
+                    <p className="font-bold text-white">{s.displayName}</p>
+                    <p className="text-sm text-gray-400">
                       Email: {s.email} | Credits: {s.credits ?? 0}
                     </p>
                   </div>
@@ -347,15 +308,6 @@ export default function AdminDashboard() {
               </div>
             )}
           </section>
-
-          <div className="text-center">
-            <button
-              onClick={() => router.push("/admin/content")}
-              className="bg-gradient-to-r from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600"
-            >
-              Manage Content
-            </button>
-          </div>
         </div>
       </div>
     </>
