@@ -57,6 +57,8 @@ export default function AdminDashboard() {
     );
     setClassRequests(classData);
 
+    
+
     const creditQ = query(collection(db, "creditRequests"), where("status", "==", "pending"));
     const creditSnap = await getDocs(creditQ);
     const creditData = await Promise.all(
@@ -91,14 +93,42 @@ export default function AdminDashboard() {
         batch.update(reqRef, { status: "approved", approvedAt: new Date().toISOString() });
         await batch.commit();
       } else if (col === "classesRequests") {
-        const uid = req.uid || req.targetUserId;
-        const userSnap = await getDoc(doc(db, "users", uid));
-        const user = userSnap.data();
-        const batch = writeBatch(db);
-        batch.update(doc(db, "users", uid), { credits: increment(-1) });
-        batch.update(reqRef, { status: "approved", approvedAt: new Date().toISOString() });
-        await batch.commit();
-      }
+  const uid = req.uid || req.targetUserId;
+
+  // Deduct one credit + approve request
+  const batch = writeBatch(db);
+  batch.update(doc(db, "users", uid), { credits: increment(-1) });
+  batch.update(reqRef, { status: "approved", approvedAt: new Date().toISOString() });
+  await batch.commit();
+
+  // 🎯 CALL GOOGLE CALENDAR API
+  try {
+    const startDateTime = new Date(`${req.date}T${req.time}:00+06:00`);
+    const endDateTime = new Date(startDateTime.getTime() + 45 * 60000); // 45 minute class
+
+    const calendarResponse = await fetch("/api/calendar/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        summary: `Violin Class - ${classRequests[0].displayName}`,
+        description: `Scheduled class for ${classRequests[0].displayName}`,
+        startDateTime: startDateTime.toISOString(),
+        endDateTime: endDateTime.toISOString(),
+        timeZone: "Asia/Dhaka"
+      })
+    });
+
+    const data = await calendarResponse.json();
+    if (!data.success) {
+      console.error("Calendar error:", data);
+      setError("⚠ Class approved but calendar event could not be created!");
+    }
+  } catch (err) {
+    console.error("Calendar API call failed:", err.message);
+    setError("Calendar event creation failed. Check logs.");
+  }
+}
+
       await fetchRequests();
     } catch (e) {
       setError(e.message);
@@ -147,6 +177,9 @@ export default function AdminDashboard() {
       </div>
     );
   }
+
+
+  // console.log("Fetched class requests:", classRequests[0].displayName);
 
   return (
     <>
