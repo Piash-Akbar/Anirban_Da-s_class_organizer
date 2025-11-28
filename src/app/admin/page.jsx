@@ -246,9 +246,20 @@ export default function AdminDashboard() {
                   >
                     <div>
                       <p className="font-bold text-white">{r.displayName}</p>
-                      <p className="text-sm text-gray-400">
-                        {r.amount} classes – {r.message || "No message"}
+                      <p className="text-xl text-gray-400">
+                        {r.amount} classes
                       </p>
+
+                      <p>
+                        Payment Method: {r.paymentMethod}
+                      </p>
+                      <p>
+                        Transaction Proof: {r.proof}
+                      </p>
+                      <p>
+                        Additional Message: {r.message || "N/A"}
+                      </p>
+
                     </div>
                     <div className="flex gap-2">
                       <button
@@ -303,6 +314,12 @@ export default function AdminDashboard() {
                     <p className="text-sm text-gray-400">
                       Email: {s.email} | Credits: {s.credits ?? 0}
                     </p>
+
+                    change name / fee or delete student functionality can be added here
+
+
+
+
                   </div>
                 ))}
               </div>

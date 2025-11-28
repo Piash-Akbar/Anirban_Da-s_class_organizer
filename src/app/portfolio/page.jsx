@@ -37,6 +37,7 @@ export default function LandingPage() {
             displayName: firebaseUser.displayName || "Organizer User",
             photoURL: firebaseUser.photoURL || "",
             role: "user",
+            classFee: 600,
             createdAt: new Date().toISOString(),
           });
         } else {

@@ -32,6 +32,7 @@ export default function UserPage() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [credit, setCredit] = useState(0);
+  // const [classFee, setClassFee] = useState(600); // Example class fee
 
   const uid = params.uid;
 
@@ -271,27 +272,13 @@ export default function UserPage() {
           )}
         </div>
 
-        {/* Buttons */}
-        {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-            onClick={() => setShowSchedulePopup(true)}
-            className="bg-blue-600 hover:bg-blue-700 inset-0 z-50 px-8 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg"
-          >
-            Schedule a Class
-          </button>
-          <button
-            onClick={handleBuyCredit}
-            className="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg"
-          >
-            Buy Class
-          </button>
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 hover:bg-red-700 px-8 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg"
-          >
-            Logout
-          </button>
-        </div> */}
+          {/* Latest payment Status can be added here */}
+       <div className="mb-8 bg-gray-800/80 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-yellow-500 transition-all">
+        <h2 className=" text-2xl font-semibold text-purple-400 mb-3">Last Payment Status</h2>
+        <p className="text-gray-400">Feature coming soon...</p>
+       </div>
+
+
       </div>
 
       {/* Schedule Popup */}

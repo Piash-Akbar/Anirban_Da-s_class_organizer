@@ -1,18 +1,20 @@
 "use client";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc,doc,getDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import Image from "next/image";
 import { db, auth } from "../../../firebaseConfig";
+// import {doc} 
 
 export default function BuyCreditPage() {
   const { uid } = useParams();
   const router = useRouter();
-
+  const [classFee, setClassFee] = useState(); // Default class fee
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [proof, setProof] = useState("");
+  const [message, setMessage] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -27,6 +29,7 @@ export default function BuyCreditPage() {
         amount,
         paymentMethod,
         proof,
+        message,
         status: "pending",
         createdAt: new Date().toISOString(),
       });
@@ -43,6 +46,22 @@ export default function BuyCreditPage() {
     router.push("/");
   }
 
+  useEffect(() => {
+    // Fetch class fee from user document if needed
+    const fetchClassFee = async () => {
+      const userRef = doc(db, "users", uid);
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+        setClassFee(userData.classFee || 60); // Default to 600 if not set
+      }
+    };
+    fetchClassFee();
+  }, []);
+
+
+
+
   return (
     <div className="relative">
       <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-30"></div>
@@ -57,6 +76,7 @@ export default function BuyCreditPage() {
           </button>
 
           <h1 className="text-4xl font-bold mb-6">Buy Class</h1>
+          <span>Your class fee is <b className="font-bold text-2xl">{classFee}</b> INR per class</span>
 
           <div className="flex flex-col md:flex-row gap-8 bg-gray-800 p-6 rounded-lg w-full max-w-4xl">
             {/* ===== Left Side: Form ===== */}
@@ -71,6 +91,7 @@ export default function BuyCreditPage() {
                 onChange={(e) => setAmount(e.target.value)}
                 className="p-2 rounded border text-white"
               />
+              <span>`total payable amount for {amount} classes is <b className="font-bold text-2xl">{amount*classFee}</b> INR `</span>
 
               <select
                 value={paymentMethod}
@@ -82,6 +103,16 @@ export default function BuyCreditPage() {
                 <option value="Bank transfer">Bank Transfer</option>
               </select>
 
+              {/* Amount of money */}
+              {/* <input
+                type="number"
+                placeholder="Total amount paid (in INR)"
+                // value={amount * 500}
+                // readOnly
+                className="p-2 rounded border text-white bg-gray-700"
+              /> */}
+
+
               <input
                 type="number"
                 placeholder="Paste your transaction number"
@@ -89,6 +120,13 @@ export default function BuyCreditPage() {
                 onChange={(e) => setProof(e.target.value)}
                 className="p-2 rounded border text-white"
               />
+
+              <textarea
+                placeholder="Additional message (optional)"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="p-2 rounded border text-white"
+              ></textarea>
 
               <div className="flex gap-2">
                 <button
