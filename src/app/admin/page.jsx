@@ -196,7 +196,7 @@ export default function AdminDashboard() {
                   >
                     <div>
                       <p className="font-bold text-white">{r.displayName}</p>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-xl text-gray-400">
                         Date: {r.date} | Time: {r.time}
                       </p>
                     </div>

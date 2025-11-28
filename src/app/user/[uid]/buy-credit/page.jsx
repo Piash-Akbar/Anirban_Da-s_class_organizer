@@ -27,6 +27,7 @@ export default function BuyCreditPage() {
       await addDoc(collection(db, "creditRequests"), {
         targetUserId: uid,
         amount,
+        classFee,
         paymentMethod,
         proof,
         message,

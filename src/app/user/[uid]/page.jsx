@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { auth, db } from "../../firebaseConfig";
 import Navbar from "@/app/navbar/navbar";
@@ -14,6 +14,8 @@ import {
   getDocs,
   orderBy,
   limit,
+  where,
+  serverTimestamp,
 } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import DatePicker from "react-datepicker";
@@ -97,7 +99,7 @@ export default function UserPage() {
         date: formattedDate,
         time: selectedTime,
         status: "pending",
-        createdAt: new Date().toISOString(),
+        createdAt: serverTimestamp(),
       });
       alert("Class schedule request sent!");
       setShowSchedulePopup(false);
@@ -125,6 +127,7 @@ export default function UserPage() {
 
   // Latest Class Schedule status with date and time from firestore
   const [latestClassSchedule, setLatestClassSchedule] = useState(null);
+  const [lastPayment, setLastPayment] = useState(null);
   useEffect(() => {
     const fetchLatestClassSchedule = async () => {
       try {
@@ -147,6 +150,43 @@ export default function UserPage() {
     };
     fetchLatestClassSchedule();
   }, []);
+
+
+  useEffect(() => {
+    const fetchLastCreditRequest = async () => {
+      // 1. Ensure `uid` is available before querying
+      if (!uid) {
+        // console.warn("User ID (uid) not available, skipping credit request fetch.");
+        setLastPayment(null); // Assuming setLastPayment is what you use for this data
+        return;
+      }
+
+      try {
+        const lastCreditRequestQuery = query(
+          // Correct collection name: "creditRequests"
+          collection(db, "creditRequests"),
+          // Filter by 'targetUserId' which identifies the user for this request
+          where("targetUserId", "==", uid),
+          orderBy("createdAt", "desc"),
+          limit(1)
+        );
+        const lastCreditRequestSnap = await getDocs(lastCreditRequestQuery);
+        if (!lastCreditRequestSnap.empty) {
+          const lastCreditRequestData = lastCreditRequestSnap.docs[0].data();
+          // Assuming you still want to set this data to 'lastPayment' state
+          setLastPayment(lastCreditRequestData);
+        } else {
+          setLastPayment(null);
+        }
+      } catch (err) {
+        console.error("Error fetching last credit request:", err);
+        setError("Failed to fetch last credit request.");
+      }
+    };
+    fetchLastCreditRequest();
+  }, [uid]); // 'uid' is correctly listed as a dependency
+
+
 
   if (latestClassSchedule) {
       const formattedDate = new Date(latestClassSchedule.date).toLocaleDateString("en-CA"); // en-CA gives YYYY-MM-DD
@@ -274,8 +314,19 @@ export default function UserPage() {
 
           {/* Latest payment Status can be added here */}
        <div className="mb-8 bg-gray-800/80 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-yellow-500 transition-all">
-        <h2 className=" text-2xl font-semibold text-purple-400 mb-3">Last Payment Status</h2>
-        <p className="text-gray-400">Feature coming soon...</p>
+        <h2 className=" text-2xl font-semibold text-purple-400 mb-3">Last Payment Summary</h2>
+        <p>
+          Classes: {lastPayment.amount} 
+        </p>
+        <p>
+          Status: {lastPayment.status}  
+        </p>  
+        <p>
+          Date: {lastPayment.createdAt}
+        </p>
+        <p>
+          Method: {lastPayment.paymentMethod}
+        </p>
        </div>
 
 
