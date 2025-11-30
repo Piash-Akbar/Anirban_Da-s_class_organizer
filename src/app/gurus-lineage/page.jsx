@@ -16,15 +16,15 @@ export default function GurusLineage() {
       title: "Foundation of Rhythm & Melody",
       image: "/jitesh-bhattacharjee.jpg",
       images: ["/jitesh-bhattacharjee.jpg"], // Single image
-      text: "From his earliest memories, Anirban was immersed in the intricate world of Indian classical rhythms—Teentaal, Ektaal, Jhaptaal—under the masterful guidance of his father. Though an engineer by profession, Shri Jitesh Bhattacharjee is a distinguished Tabla maestro who has performed alongside luminaries like Pandit Hariprasad Chaurasia and Vidushi Girija Devi. Beyond percussion, he nurtured Anirban's melodic sensibilities through soulful Rabindrasangeet and harmonium, laying the bedrock of his musical consciousness.",
+      text: "The seeds of music were sown in Anirban even before he developed a conscious memory of his own. Anirban has famously said that he has no recollection of not knowing Teentaal, Ektaal, Jhaptaal, Rupak Taal, Keherwa or Dadra. The credit for this goes entirely to his father, Shri Jitesh Bhattacharjee, who, despite being an engineer by profession, is an accomplished Tabla artist who has had the great fortune of accompanying legends like Pandit Hariprasad Chaurasia and Vidushi Girija Devi. <br /> Besides rhythmic training, Anirban also learned the basics of melody from his father, who is as adept with Rabindrasangeet and harmonium as he is with the Tabla.",
       specialties: ["Tabla Mastery", "Rhythmic Foundation", "Rabindrasangeet"],
       gharana: "Familial Tradition"
     },
     {
       name: "Shri Ashim Dutta & Shri Manoj Baruah",
       title: "Masters of Violin Artistry",
-      images: ["/ashim-dutta.jpeg", "/manoj-baruah.jpg"], // Two separate images
-      text: "Anirban's violin odyssey commenced at 15 under Shri Ashim Dutta's tutelage in Guwahati. Recognizing his prodigious talent, Dutta ji swiftly entrusted him to Shri Manoj Baruah—a virtuoso of the Senia-Maihar lineage and champion of violin culture in Northeast India. Over nearly a decade, Baruah ji sculpted Anirban's technique, mastering the Tantrakari instrumental style while absorbing Gayaki vocal nuances. This period also demystified the contrasts between live concert artistry and studio recording precision, with Anirban revering Baruah ji as an unparalleled session genius.",
+      images: ["/ashim-dutta.jpg", "/manoj-baruah.jpg"], // Two separate images
+      text: "Anirban's training in violin began at the age of 15 under Shri Ashim Dutta of Guwahati, Assam. In recognition of Anirban's prodigious talent, Mr. Dutta chose to not train Anirban within a mere ten months of starting to teach him, and handed him over to Shri Manoj Baruah, a virtuoso who had already compounded manifold the popularity of the violin in the North-East. A disciple of the legendary Dr. Sisirkana Dhar Choudhury of the Senia-Maihar Gharana, Shri Manoj Baruah did not fail to see the immense potential that lay dormant in his new student, and almost immediately began educating Anirban in advanced techniques of the violin. This is an association that lasted nearly a decade, where Anirban learned not only the nitty-gritties of Tantrakari violin-playing, but also a lot of Gayaki-ang as well as the difference between performing classical music on stage and playing in recording sessions for commercial projects. Anirban still emphasises that he is yet to see a smarter violin session artist than Manoj Ji.",
       specialties: ["Tantrakari Technique", "Violin Virtuosity", "Senia-Maihar", "Performance Craft"],
       gharana: "Senia-Maihar Gharana"
     },
@@ -33,18 +33,33 @@ export default function GurusLineage() {
       title: "Architect of Raga Realms",
       image: "/sisirkana-choudhury.jpg",
       images: ["/sisirkana-choudhury.jpg"], // Single image
-      text: "During his mathematical studies in Kolkata, Anirban received the rare blessing of direct mentorship from the legendary Dr. Sisirkana Dhar Choudhury—guru of his violin master. Her profound Maargdarshan expanded his raga horizons, unveiling esoteric melodies unique to Senia-Maihar traditions. Under her sagacious guidance, Anirban mastered sophisticated raga elaboration techniques, transforming even familiar scales into profound musical narratives that resonate with both tradition and personal expression.",
+      text: "While under the tutelage of Manoj Ji, Anirban moved to Kolkata to pursue a bachelors degree in Mathematics from the renowned St. Xavier's College. During this period, Anirban had the privilege of being mentored by Manoj Ji's legendary Guru, Dr. Sisirkana Dhar Choudhury herself. Sisirkana Ji's Maargdarshan opened up horizons of raga music hitherto unknown to Anirban. Under the legend's tutelage, Anirban was exposed to several rare Ragas that are performed exclusively in the Senia-Maihar Gharana, in addition to being taught rather intricate paths of raga development even in common ragas.",
       specialties: ["Raga Elaboration", "Senia-Maihar Secrets", "Maargdarshan", "Rare Ragas"],
       gharana: "Senia-Maihar Gharana"
     },
     {
-      name: "Prof. Biswajit Roy Choudhury & Dr. Swarna Khuntia",
-      title: "Fusion of Vocal & Instrumental Worlds",
-      images: ["/biswajit-roy-choudhury.jpeg", "/swarna-khuntia.jpeg"], // Two separate images
-      text: "While rooted in Tantrakari brilliance, Anirban sought the soulful Gayaki approach exemplified by Dr. N. Rajam. Dr. Swarna Khuntia, her illustrious disciple, became his guide to vocal expression on violin. Complementing this, Prof. Biswajit Roy Choudhury illuminated Pandit V.G. Jog's instrumental perspectives. This synthesis of traditions birthed Anirban's signature style—a revolutionary amalgamation where vocal lyricism dances with instrumental precision, creating a sound uniquely his own.",
+      name: "Dr. Swarna Khuntia",
+      title: "Gayaki Ang",
+      images: ["/swarna-khuntia.jpeg"], // Two separate images
+      text: "Even though almost the entirety of Anirban's training has been in the Tantrakari system, his formative training ensured that the Gayaki method was never too far from his periphery of vision. In particular, Dr. N. Rajam's music left a deep impression in Anirban's mind. So, he sought the guidance of Dr. Swarna Khuntia, a celebrated disciple of Amma Ji (as Dr. Rajam is called by everyone in her lineage), and Swarna Ji was more than happy to oblige. This turned out to be the final piece in cementing Anirban's very individual style of violin playing - the unprecedented hybrid of the Tantrakari and Gayaki systems that his audience is now witness to.",
       specialties: ["Gayaki Ang", "Style Synthesis", "Dr. N. Rajam Legacy", "V.G. Jog Influence"],
-      gharana: "Gayaki & Tantrakari Traditions"
+      gharana: "Gwalior Gharana"
     },
+
+
+     {
+      name: "Prof. Biswajit Roy Choudhury",
+      title: "Roots of Tantrakari Tradition",
+      images: ["/biswajit-roy-choudhury.jpeg"], // Two separate images
+      text: "Pandit V.G. Jog was a pioneering figure in Tantrakari-ang violin playing, and Anirban received exposure to Pandit Jog's perspectives from Prof. Biswajit Roy Choudhury, one of Pandit Jog's several illustrious disciples.",
+      specialties: ["Gayaki Ang", "Style Synthesis", "Dr. N. Rajam Legacy", "V.G. Jog Influence"],
+      gharana: "Senia-Maihar Gharana"
+    },
+
+
+
+
+
     {
       name: "Shri Supratik Sengupta",
       title: "Sitar Symphony on Violin Strings",
@@ -83,7 +98,7 @@ export default function GurusLineage() {
               Gurus & Lineage
             </h1>
             <p className="text-4xl font-palisade font-bold mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>
-              The Masters Who Shaped Anirban's Musical Soul
+              The Masters Who Shaped Anirban's Music.
             </p>
             <Link 
               href="/portfolio#gurus" 
@@ -161,7 +176,7 @@ export default function GurusLineage() {
                     </p>
                     
                     {/* Specialties */}
-                    <div>
+                    {/* <div>
                       <h5 className="text-sm font-semibold text-amber-400 uppercase tracking-wide mb-3">Key Contributions</h5>
                       <div className="flex flex-wrap gap-2">
                         {guru.specialties.map((specialty, sIndex) => (
@@ -174,7 +189,7 @@ export default function GurusLineage() {
                           </span>
                         ))}
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* Legacy Quote */}
                     <blockquote className="border-l-4 border-amber-500/30 pl-4 italic text-gray-400">

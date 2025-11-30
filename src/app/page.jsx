@@ -194,10 +194,10 @@ export default function Portfolio() {
               {/* Text Content with Better Typography */}
               <div className="space-y-6">
                 <div className="space-y-4">
-                  <p className="text-lg leading-relaxed text-gray-200 font-light">
+                  {/* <p className="text-lg leading-relaxed text-gray-200 font-light">
                     Embark on a musical odyssey guided by the luminaries of{' '}
                     <span className="text-amber-400 font-semibold">Hindustani Classical Music</span>!
-                  </p>
+                  </p> */}
                   <p className="text-gray-300">
                     Anirban Bhattacharjee's artistry is a tapestry woven from the teachings of revered gurus. From the rhythmic foundations laid by his father,{' '}
                     <strong className="text-amber-400">Jitesh Bhattacharjee</strong>, to the intricate violin techniques imparted by{' '}

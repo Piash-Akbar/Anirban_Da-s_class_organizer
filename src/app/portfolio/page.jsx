@@ -120,8 +120,8 @@ export default function LandingPage() {
       <div className="relative min-h-screen flex flex-col items-center justify-center text-center bg-gray-900">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-30"></div>
         <div className="relative z-10 flex flex-col">
-          <h1 className="text-6xl font-bold font-palisade bg-transparent text-white p-4 rounded-2xl mb-6">
-            The one stop solution for all your violin learning needs.
+          <h1 className="text-4xl font-bold font-opensans bg-transparent text-white p-4 rounded-2xl mb-6">
+            The one stop solution for all your <br /> violin learning needs!
           </h1>
           {error && (
             <p className="text-red-500 mb-4">Error: {error}</p>
