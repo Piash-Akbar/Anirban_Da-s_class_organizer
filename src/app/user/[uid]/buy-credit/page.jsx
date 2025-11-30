@@ -54,7 +54,7 @@ export default function BuyCreditPage() {
       const docSnap = await getDoc(userRef);
       if (docSnap.exists()) {
         const userData = docSnap.data();
-        setClassFee(userData.classFee || 60); // Default to 600 if not set
+        setClassFee(userData.classFee || "00"); // Default to 600 if not set
       }
     };
     fetchClassFee();

@@ -27,6 +27,10 @@ export default function AdminDashboard() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  // edit students 
+  const [editingStudent, setEditingStudent] = useState(null);
+  const [editForm, setEditForm] = useState({ displayName: "", classFee: "" });
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
@@ -177,6 +181,38 @@ export default function AdminDashboard() {
       </div>
     );
   }
+
+  //student edit functions
+  // Open edit Model function
+  const openEditModal = (student) => {
+  setEditingStudent(student.id);
+  setEditForm({
+    displayName: student.displayName ?? "",
+    classFee: student.classFee ?? ""
+  });
+};
+
+// Save edit changes function 
+const saveStudentChanges = async () => {
+  setSaving(true);
+  try {
+    await updateDoc(doc(db, "users", editingStudent), {
+      displayName: editForm.displayName,
+      classFee: Number(editForm.classFee),
+    });
+
+    // Refresh student list
+    await fetchStudents();
+    setEditingStudent(null);
+  } catch (e) {
+    setError("Failed to update student info: " + e.message);
+  } finally {
+    setSaving(false);
+  }
+};
+
+
+
 
 
   // console.log("Fetched class requests:", classRequests[0].displayName);
@@ -344,13 +380,70 @@ export default function AdminDashboard() {
                     className="bg-gray-900/70 p-4 rounded-lg shadow-lg hover:shadow-amber-500/10 transition-all"
                   >
                     <p className="font-bold text-white">{s.displayName}</p>
+                    <p>
+                      Classes Remain: {s.credits ?? 0}
+                    </p>
                     <p className="text-sm text-gray-400">
-                      Email: {s.email} | Credits: {s.credits ?? 0}
+                      Email: {s.email}
+                    </p>
+                    <p>
+                      Class Fee: {s.classFee ? `$${s.classFee}` : "Not set"}
                     </p>
 
-                    change name / fee or delete student functionality can be added here
+                    <div className="flex gap-2 mt-3">
+                    <button
+                      onClick={() => openEditModal(s)}
+                      className="px-3 py-1 rounded-lg bg-amber-500 text-black font-medium hover:bg-amber-600"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                  {editingStudent && (
+  <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+    <div className="bg-gray-800 p-6 rounded-xl w-full max-w-md">
+      <h2 className="text-xl font-semibold text-amber-400 mb-4">Edit Student</h2>
 
+      <label className="block mb-3">
+        Display Name
+        <input
+          type="text"
+          value={editForm.displayName}
+          onChange={(e) => setEditForm({ ...editForm, displayName: e.target.value })}
+          className="w-full p-2 rounded bg-gray-700 text-white mt-1"
+        />
+      </label>
 
+      <label className="block mb-4">
+        Class Fee
+        <input
+          type="number"
+          value={editForm.classFee}
+          onChange={(e) => setEditForm({ ...editForm, classFee: e.target.value })}
+          className="w-full p-2 rounded bg-gray-700 text-white mt-1"
+        />
+      </label>
+
+      <div className="flex justify-end gap-3">
+        <button
+          onClick={() => setEditingStudent(null)}
+          className="px-4 py-2 bg-gray-600 rounded-lg"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={saveStudentChanges}
+          disabled={saving}
+          className={`px-4 py-2 rounded-lg text-white font-medium ${
+            saving ? "bg-gray-500" : "bg-green-600 hover:bg-green-700"
+          }`}
+        >
+          {saving ? "Saving..." : "Save"}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
 
                   </div>
