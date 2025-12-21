@@ -200,14 +200,14 @@ export default function Portfolio() {
                   </p> */}
                   <p className="text-gray-300">
                     Anirban Bhattacharjee's artistry is a tapestry woven from the teachings of revered gurus. From the rhythmic foundations laid by his father,{' '}
-                    <strong className="text-amber-400"> <a href="/gurus-lineage#jitesh-bhattacharjee">Jitesh Bhattacharjee</a></strong>, to the intricate violin techniques imparted by{' '}
-                    <strong className="text-pink-400"><a href="/gurus-lineage#ashim-dutta">Shri Ashim Dutta</a></strong> and{' '}
-                    <strong className="text-purple-400"><a href="/gurus-lineage#manoj-baruah">Shri Manoj Baruah</a></strong>, each mentor has sculpted his unique sound.
+                    <strong className="text-amber-400"> <a target="_blank" href="https://www.facebook.com/jitesh.bhattacharjee/">Jitesh Bhattacharjee</a></strong>, to the intricate violin techniques imparted by{' '}
+                    <strong className="text-pink-400"><a target="_blank" href="https://www.facebook.com/profile.php?id=100052440127869&rdid=PIVCA0F4jOkKzEYl&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F17qCHBxaCx%2F#">Shri Ashim Dutta</a></strong> and{' '}
+                    <strong className="text-purple-400"><a target="_blank" href="https://www.facebook.com/manoj.baruah.524?rdid=iItOiAlOY775fXA2&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BwADahzom%2F#">Shri Manoj Baruah</a></strong>, each mentor has sculpted his unique sound.
                   </p>
                   <p className="text-gray-300">
-                    The legendary <strong className="text-emerald-400"><a href="/gurus-lineage#sisirkana-choudhury">Dr. Sisirkana Dhar Choudhury</a></strong> of the Senia Maihar Gharana infused his music with soulful depth, while{' '}
-                    <strong className="text-orange-400"><a href="/gurus-lineage#supratik-sengupta">Shri Supratik Sengupta</a></strong> of the Senia Shahjahanpur Gharana added virtuosic finesse. Under the tutelage of the late{' '}
-                    <strong className="text-rose-400"><a href="/gurus-lineage#swarna-khuntia">Dr. Swarna Khuntia</a></strong>, a disciple of Dr. N. Rajam, Anirban mastered the Gayaki style, blending melody with emotion.
+                    The legendary <strong className="text-emerald-400"><a target="_blank" href="https://en.wikipedia.org/wiki/Sisir_Kana_Dhar_Chowdhury">Dr. Sisirkana Dhar Choudhury</a></strong> of the Senia Maihar Gharana infused his music with soulful depth, while{' '}
+                    <strong className="text-orange-400"><a target="_blank" href="https://www.facebook.com/supratik.sengupta.79?rdid=z1NnDkePz80g8tmp&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1AEvNtDWRp%2F#">Shri Supratik Sengupta</a></strong> of the Senia Shahjahanpur Gharana added virtuosic finesse. Under the tutelage of the late{' '}
+                    <strong className="text-rose-400"><a href="https://www.facebook.com/swarna.khuntia?rdid=bbatBp9Zq4cEqul3&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Ccp24UQUi%2F#">Dr. Swarna Khuntia</a></strong>, a disciple of Dr. N. Rajam, Anirban mastered the Gayaki style, blending melody with emotion.
                   </p>
                   <p className="text-gray-300 italic">
                     This illustrious lineage fuels his performances with a celestial spark, resonating across time and tradition.

@@ -29,16 +29,16 @@ export default function GurusLineage() {
       text: "While under the tutelage of Manoj Ji, Anirban moved to Kolkata to pursue a bachelors degree in Mathematics from the renowned St. Xavier's College. During this period, Anirban had the privilege of being mentored by Manoj Ji's legendary Guru, Dr. Sisirkana Dhar Choudhury herself. Sisirkana Ji's Maargdarshan opened up horizons of raga music hitherto unknown to Anirban. Under the legend's tutelage, Anirban was exposed to several rare Ragas that are performed exclusively in the Senia-Maihar Gharana, in addition to being taught rather intricate paths of raga development even in common ragas."
     },
     {
-      name: "Dr. Swarna Khuntia",
-      title: "Gayaki Ang",
-      images: ["/swarna-khuntia.jpeg"],
-      text: "Even though almost the entirety of Anirban's training has been in the Tantrakari system, his formative training ensured that the Gayaki method was never too far from his periphery of vision. In particular, Dr. N. Rajam's music left a deep impression in Anirban's mind. So, he sought the guidance of Dr. Swarna Khuntia, a celebrated disciple of Amma Ji (as Dr. Rajam is called by everyone in her lineage), and Swarna Ji was more than happy to oblige. This turned out to be the final piece in cementing Anirban's very individual style of violin playing - the unprecedented hybrid of the Tantrakari and Gayaki systems that his audience is now witness to."
-    },
-    {
       name: "Prof. Biswajit Roy Choudhury",
       title: "Roots of Tantrakari Tradition",
       images: ["/biswajit-roy-choudhury.jpeg"],
       text: "Pandit V.G. Jog was a pioneering figure in Tantrakari-ang violin playing, and Anirban received exposure to Pandit Jog's perspectives from Prof. Biswajit Roy Choudhury, one of Pandit Jog's several illustrious disciples."
+    },
+    {
+      name: "Dr. Swarna Khuntia",
+      title: "Gayaki Ang",
+      images: ["/swarna-khuntia.jpeg"],
+      text: "Even though almost the entirety of Anirban's training has been in the Tantrakari system, his formative training ensured that the Gayaki method was never too far from his periphery of vision. In particular, Dr. N. Rajam's music left a deep impression in Anirban's mind. So, he sought the guidance of Dr. Swarna Khuntia, a celebrated disciple of Amma Ji (as Dr. Rajam is called by everyone in her lineage), and Swarna Ji was more than happy to oblige. This turned out to be the final piece in cementing Anirban's very individual style of violin playing - the unprecedented hybrid of the Tantrakari and Gayaki systems that his audience is now witness to."
     },
     {
       name: "Shri Supratik Sengupta",
@@ -114,7 +114,7 @@ export default function GurusLineage() {
         </section>
 
         {/* Closing Summary */}
-        <section className="py-24 px-4 md:px-20 bg-gradient-to-b from-gray-900 to-black">
+        {/* <section className="py-24 px-4 md:px-20 bg-gradient-to-b from-gray-900 to-black">
           <div className="max-w-4xl mx-auto text-center space-y-12">
             <h2 className={`text-6xl font-serif font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-rose-400 to-purple-500 ${greatVibes.className}`}>
               Sacred Parampara
@@ -133,7 +133,7 @@ export default function GurusLineage() {
               Witness the Mastery →
             </Link>
           </div>
-        </section>
+        </section> */}
 
         {/* Footer */}
         <footer className="py-12 bg-black/50 border-t border-white/10 text-center text-gray-400">
