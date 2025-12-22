@@ -255,7 +255,7 @@ export default function Portfolio() {
             </div>
 
             {/* Guru Highlights - Small Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-12">
+            {/* <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-12">
               {[
                 { name: "Jitesh Bhattacharjee", color: "bg-amber-500" },
                 { name: "Ashim Dutta", color: "bg-blue-500" },
@@ -268,7 +268,7 @@ export default function Portfolio() {
                   {guru.name.split(' ').map(word => word.split('')[0]).join('')}
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </section>
 
