@@ -2,12 +2,27 @@
 import { Great_Vibes } from "next/font/google";
 import Navbar from "../navbar/navbar";
 import Link from "next/link";
+import HeroSection from "../components/HeroSection";
 
 const greatVibes = Great_Vibes({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-great-vibes",
 });
+
+
+const heroImages = [
+  '/background.jpg',
+  '/anirban01.jpg',
+  '/anirban02.jpg',
+  '/anirban03.jpg',
+  '/anirbanda.jpg',
+  // '/background-7.jpg',
+  // '/background-8.jpg',
+];
+
+
+
 
 export default function GurusLineage() {
   const gurus = [
@@ -91,7 +106,7 @@ export default function GurusLineage() {
         `}</style>
 
         {/* Hero Section */}
-        <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* <section className="relative h-screen flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-50"></div>
           <div className="relative z-10 text-center px-4">
             <h1 className={`text-8xl font-bold mb-4 animate-fade-in font-serif antialiased ${greatVibes.className}`}>
@@ -107,7 +122,18 @@ export default function GurusLineage() {
               ← Back to Portfolio
             </Link>
           </div>
-        </section>
+        </section> */}
+
+
+        <HeroSection
+          images={heroImages}
+          title="Gurus & Lineage"
+          subtitle="The Masters Who Shaped Anirban's Music."
+          ctaText="← Back to Portfolio"
+          ctaLink="/"
+        />
+
+
 
 
         {/* Gurus Content */}

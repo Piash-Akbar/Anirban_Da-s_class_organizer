@@ -6,12 +6,28 @@ import { db } from "./firebaseConfig"; // Ensure this import and config are corr
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
 import { Great_Vibes } from "next/font/google";
+import HeroSection from "./components/HeroSection";
 
 const greatVibes = Great_Vibes({
   subsets: ["latin"],
   weight: "400", // ✅ only available weight
   variable: "--font-great-vibes",
 });
+
+//Images for Hero Section(Slideshow)
+const heroImages = [
+  '/background.jpg',
+  '/anirban01.jpg',
+  '/anirban02.jpg',
+  '/anirban03.jpg',
+  '/anirbanda.jpg',
+  // '/background-7.jpg',
+  // '/background-8.jpg',
+];
+
+
+
+
 
 // Utility function to format date
 const formatDate = (date) => {
@@ -87,14 +103,21 @@ export default function Portfolio() {
         `}</style>
 
         {/* Hero Section */}
-        <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* <section className="relative h-screen flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-50"></div>
           <div className="relative z-10 text-center px-4">
           <h1 className={`text-8xl font-bold mb-4 animate-fade-in font-serif antialiased ${greatVibes.className}`}> Anirban Bhattacharjee </h1>
             <p className="text-6xl font-palisade font-bold mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>Pioneer of the Violin in the Senia-Shahjahanpur Gharana</p>
             <a href="/#about" className="bg-white text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition animate-bounce">Discover My Journey</a>
           </div>
-        </section>
+        </section> */}
+        <HeroSection 
+          images={heroImages}
+          title="Anirban Bhattacharjee"
+          subtitle="Pioneer of the Violin in the Senia-Shahjahanpur Gharana"
+          ctaText="Discover My Journey"
+          ctaLink="/#about"
+        />
 
         {/* About Section */}
         <section id="about" className="py-20 px-4 md:px-20 bg-gray-800">
