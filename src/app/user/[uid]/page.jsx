@@ -313,22 +313,23 @@ export default function UserPage() {
         </div>
 
           {/* Latest payment Status can be added here */}
-       <div className="mb-8 bg-gray-800/80 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-yellow-500 transition-all">
+       { lastPayment && (
+        <div className="mb-8 bg-gray-800/80 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition-all">
         <h2 className=" text-2xl font-semibold text-purple-400 mb-3">Last Payment Summary</h2>
         <p>
-          Classes: {lastPayment.amount} 
+          Classes: {lastPayment?.amount} 
         </p>
         <p>
-          Status: {lastPayment.status}  
+          Status: {lastPayment?.status}  
         </p>  
         <p>
-          Date: {lastPayment.createdAt}
+          Date: {lastPayment?.createdAt}
         </p>
         <p>
-          Method: {lastPayment.paymentMethod}
+          Method: {lastPayment?.paymentMethod}
         </p>
-       </div>
-
+       </div> 
+        )}
 
       </div>
 
