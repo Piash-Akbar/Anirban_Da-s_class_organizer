@@ -298,7 +298,7 @@ export default function Portfolio() {
         {/* Gallery Section */}
         <section id="playings" className="py-20 px-4 md:px-20 bg-gray-900">
           <div className="max-w-6xl mx-auto">
-            <h2 className={`text-6xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in p-4 antialiased ${greatVibes.className}`}>Discography</h2>
+            <h2 className={`text-6xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in p-4 antialiased ${greatVibes.className}`}>Highlights</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <iframe
                 src="https://www.youtube.com/embed/E84fCd7DsNQ?si=_ZnB4moSiCjEcP8k" 
