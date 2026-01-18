@@ -185,6 +185,53 @@ export default function DatabaseBrowser() {
     setEditingDoc(null);
   };
 
+  /*--------Delete All--------*/
+  const deleteAllDocuments = async () => {
+  if (
+    !selectedCollection ||
+    !["classesRequests", "creditRequests"].includes(selectedCollection)
+  ) {
+    return;
+  }
+
+  const count = docs.length;
+
+  // Step 1: First confirmation
+  if (!confirm(`This will PERMANENTLY DELETE ALL ${count} documents in ${selectedCollection}.`)) {
+    return;
+  }
+
+  // Step 2: Type confirmation with count
+  const typed = prompt(`Type exactly: DELETE ${count} to confirm`);
+
+  if (typed !== `DELETE ${count}`) {
+    alert("Confirmation failed. Deletion cancelled.");
+    return;
+  }
+
+  // Step 3: Final warning
+  if (!confirm("LAST CHANCE — this cannot be undone. Proceed?")) {
+    return;
+  }
+
+  try {
+    const batch = writeBatch(db);
+    const colRef = collection(db, selectedCollection);
+    const snapshot = await getDocs(colRef);
+
+    snapshot.docs.forEach((d) => {
+      batch.delete(d.ref);
+    });
+
+    await batch.commit();
+
+    alert(`Successfully deleted all ${snapshot.size} documents from ${selectedCollection}`);
+  } catch (err) {
+    alert("Bulk delete failed: " + (err.message || "Unknown error"));
+    console.error(err);
+  }
+};
+
   /* ───────── PDF Export ───────── */
   const generateSummaryPDF = async () => {
     if (!selectedCollection || docs.length === 0) {
@@ -312,6 +359,9 @@ export default function DatabaseBrowser() {
           </button>
         ))}
 
+
+        
+
         {selectedCollection && (
           <button
             onClick={generateSummaryPDF}
@@ -319,7 +369,28 @@ export default function DatabaseBrowser() {
           >
             Export PDF
           </button>
+          
         )}
+
+        {["classesRequests", "creditRequests"].includes(selectedCollection) && docs.length > 0 && (
+  <div className="mb-6">
+    <button
+      onClick={deleteAllDocuments}
+      className="bg-red-700 hover:bg-red-800 text-white px-6 py-3 rounded-lg font-medium transition shadow-lg"
+    >
+      ⚠️ DELETE ALL {docs.length} DOCUMENTS
+    </button>
+    <p className="text-xs text-red-400 mt-2">
+      Irreversible action — only for class/credit requests
+    </p>
+  </div>
+)}
+
+
+
+
+
+
       </div>
 
       <input
