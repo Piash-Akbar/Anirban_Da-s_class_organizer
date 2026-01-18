@@ -17,6 +17,7 @@ import {
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "../loading/loadingSpinner";
+// import LoadingSpinner from "../loading/loadingSpinner";
 
 export default function AdminDashboard() {
   const [classRequests, setClassRequests] = useState([]);
@@ -237,13 +238,13 @@ const saveStudentChanges = async () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <button
               onClick={handleLogout}
-              className="bg-red-900/80 hover:bg-red-800 text-amber-400 px-6 py-2 rounded-lg font-medium transition-all duration-200 hover:shadow-lg"
+              className="bg-red-900/80 hover:bg-red-800 text-amber-400 px-6 py-2 rounded-lg font-medium transition-all duration-200 hover:cursor-pointer hover:shadow-lg"
             >
               Logout
             </button>
             <button
               onClick={() => router.push("/admin/content")}
-              className="bg-gradient-to-r from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600 transition-all duration-200 hover:shadow-lg"
+              className="bg-gradient-to-r hover:cursor-pointer from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600 transition-all duration-200 hover:shadow-lg"
             >
               Manage Content
             </button>
@@ -273,18 +274,18 @@ const saveStudentChanges = async () => {
                       <button
                         onClick={() => approveRequest("classesRequests", r.id)}
                         disabled={isProcessing("classesRequests", r.id)}
-                        className={`px-4 py-2 rounded-lg text-white font-medium ${
+                        className={`px-4 py-2 rounded-lg text-white font-medium hover:cursor-pointer ${
                           isProcessing("classesRequests", r.id)
                             ? "bg-gray-600"
                             : "bg-green-600 hover:bg-green-700"
                         }`}
                       >
-                        {isProcessing("classesRequests", r.id) ? "…" : "Approve"}
+                        {isProcessing("classesRequests", r.id) ? "Processing..." : "Approve"}
                       </button>
                       <button
                         onClick={() => declineRequest("classesRequests", r.id)}
                         disabled={isProcessing("classesRequests", r.id)}
-                        className={`px-4 py-2 rounded-lg text-white font-medium ${
+                        className={`px-4 py-2 rounded-lg text-white font-medium hover:cursor-pointer ${
                           isProcessing("classesRequests", r.id)
                             ? "bg-gray-600"
                             : "bg-red-600 hover:bg-red-700"
@@ -334,18 +335,18 @@ const saveStudentChanges = async () => {
                       <button
                         onClick={() => approveRequest("creditRequests", r.id)}
                         disabled={isProcessing("creditRequests", r.id)}
-                        className={`px-4 py-2 rounded-lg text-white font-medium ${
+                        className={`px-4 py-2 rounded-lg text-white hover:cursor-pointer font-medium ${
                           isProcessing("creditRequests", r.id)
                             ? "bg-gray-600"
                             : "bg-green-600 hover:bg-green-700"
                         }`}
                       >
-                        {isProcessing("creditRequests", r.id) ? "…" : "Approve"}
+                        {isProcessing("creditRequests", r.id) ? "Processing..." : "Approve"}
                       </button>
                       <button
                         onClick={() => declineRequest("creditRequests", r.id)}
                         disabled={isProcessing("creditRequests", r.id)}
-                        className={`px-4 py-2 rounded-lg text-white font-medium ${
+                        className={`px-4 py-2 rounded-lg text-white hover:cursor-pointer font-medium ${
                           isProcessing("creditRequests", r.id)
                             ? "bg-gray-600"
                             : "bg-red-600 hover:bg-red-700"
@@ -393,7 +394,7 @@ const saveStudentChanges = async () => {
                     <div className="flex gap-2 mt-3">
                     <button
                       onClick={() => openEditModal(s)}
-                      className="px-3 py-1 rounded-lg bg-amber-500 text-black font-medium hover:bg-amber-600"
+                      className="px-3 py-1 rounded-lg bg-amber-500 text-black font-medium hover:cursor-pointer hover:bg-amber-600"
                     >
                       Edit
                     </button>
@@ -426,7 +427,7 @@ const saveStudentChanges = async () => {
       <div className="flex justify-end gap-3">
         <button
           onClick={() => setEditingStudent(null)}
-          className="px-4 py-2 bg-gray-600 rounded-lg"
+          className="px-4 py-2 bg-gray-600 rounded-lg hover:cursor-pointer text-white font-medium hover:bg-gray-700"
         >
           Cancel
         </button>
@@ -434,7 +435,7 @@ const saveStudentChanges = async () => {
         <button
           onClick={saveStudentChanges}
           disabled={saving}
-          className={`px-4 py-2 rounded-lg text-white font-medium ${
+          className={`px-4 py-2 rounded-lg text-white font-medium hover:cursor-pointer ${
             saving ? "bg-gray-500" : "bg-green-600 hover:bg-green-700"
           }`}
         >

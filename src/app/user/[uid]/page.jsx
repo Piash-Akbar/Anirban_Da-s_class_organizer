@@ -4,7 +4,7 @@
 import { use, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { auth, db } from "../../firebaseConfig";
-import Navbar from "@/app/navbar/navbar";
+import Navbar from "../../navbar/navbar";
 import {
   doc,
   getDoc,
@@ -20,7 +20,7 @@ import {
 import { signOut } from "firebase/auth";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import LoadingSpinner from "@/app/loading/loadingSpinner";
+import LoadingSpinner from "../../loading/loadingSpinner";
 
 export default function UserPage() {
   const params = useParams();
@@ -243,19 +243,19 @@ export default function UserPage() {
         <div className="flex justify-center gap-4 mb-8">
           <button
             onClick={() => setShowSchedulePopup(true)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+            className="bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white font-semibold py-2 px-4 rounded"
           >
             Schedule a Class
           </button>
           <button
             onClick={handleBuyCredit}
-            className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
+            className="bg-green-500 hover:bg-green-600 hover:cursor-pointer text-white font-semibold py-2 px-4 rounded"
           >
             Buy Credits
           </button>
           <button
             onClick={handleLogout}
-            className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+            className="bg-red-500 hover:bg-red-600 hover:cursor-pointer text-white font-semibold py-2 px-4 rounded"
           >
             Logout
           </button>
@@ -370,7 +370,7 @@ export default function UserPage() {
               <div className="flex justify-end gap-4 mt-6">
                 <button
                   onClick={handleSchedule}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-all hover:shadow-md"
+                  className="bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white px-6 py-2 rounded-lg font-medium transition-all hover:shadow-md"
                 >
                   Submit
                 </button>
@@ -380,7 +380,7 @@ export default function UserPage() {
                     setSelectedDate(null);
                     setSelectedTime("");
                   }}
-                  className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-medium transition-all hover:shadow-md"
+                  className="bg-gray-600 hover:bg-gray-700 hover:cursor-pointer text-white px-6 py-2 rounded-lg font-medium transition-all hover:shadow-md"
                 >
                   Cancel
                 </button>

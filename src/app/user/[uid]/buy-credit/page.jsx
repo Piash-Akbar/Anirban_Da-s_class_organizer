@@ -97,10 +97,10 @@ export default function BuyCreditPage() {
               <select
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                className="p-2 rounded border text-white"
+                className="p-2 rounded border text-white hover:cursor-pointer"
               >
                 <option value="">Select Payment Method</option>
-                <option value="UPI">UPI (for payments from India only)</option>
+                <option value="UPI" >UPI (for payments from India only)</option>
                 <option value="Bank transfer">Bank Transfer</option>
               </select>
 

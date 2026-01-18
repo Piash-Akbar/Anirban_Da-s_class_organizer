@@ -414,6 +414,7 @@ export default function Portfolio() {
                     date={concert.date}
                     time = {concert.time}
                     location={concert.location}
+                    ticketURL={concert?.ticketURL}
                     style={{ animationDelay: `${index * 100}ms` }}
                   />
                 ))}

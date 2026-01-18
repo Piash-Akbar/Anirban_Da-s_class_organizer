@@ -11,6 +11,7 @@ export default function ConcertCard({
   date,
   time,
   location,
+  ticketURL,
   style,
   className = '',
 }) {
@@ -130,7 +131,9 @@ export default function ConcertCard({
 
         {/* Button */}
         <Link
-          href="#events"
+          href={ticketURL || '#'}
+          target={ticketURL ? '_blank' : '_self'}
+          rel={ticketURL ? 'noopener noreferrer' : undefined}
           className="inline-flex items-center px-6 py-3 text-sm font-semibold 
                      rounded-full border border-amber-400/30 
                      text-amber-200 hover:text-amber-100 

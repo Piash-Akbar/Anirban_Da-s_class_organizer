@@ -26,9 +26,10 @@ export default function AdminContent() {
   const [editingNotice, setEditingNotice] = useState(null);
 
   // Concerts
-  const [concert, setConcert] = useState({ venue: "", date: "", time: "", location: "" });
+  const [concert, setConcert] = useState({ venue: "", date: "", time: "", location: "", ticketURL: "" });
   const [concerts, setConcerts] = useState([]);
   const [editingConcert, setEditingConcert] = useState(null);
+  // const [ticketURL, setTicketURL] = useState("");
 
   /* ────── AUTH ────── */
   useEffect(() => {
@@ -99,13 +100,14 @@ export default function AdminContent() {
   /* ────── CONCERT HANDLERS ────── */
   const postConcert = async (e) => {
     e.preventDefault();
-    const { venue, date, time, location } = concert;
+    const { venue, date, time, location, ticketURL } = concert;
     if (!venue || !date || !time || !location) return setError("All fields required");
     await addDoc(collection(db, "upcomingConcerts"), {
       venue: venue.trim(),
       date: date.trim(),
       time: time.trim(),
       location: location.trim(),
+      ticketURL: ticketURL.trim(),
       createdAt: new Date().toISOString(),
       createdBy: "admin"
     });
@@ -169,7 +171,7 @@ export default function AdminContent() {
             <button onClick={handleLogout} className="text-amber-400 bg-red-900/80 px-4 py-2 rounded-xl hover:cursor-pointer">Logout</button>
             <button
               onClick={() => router.push("/admin")}
-              className="bg-gradient-to-r from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600"
+              className="bg-gradient-to-r from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:cursor-pointer hover:from-amber-500 hover:to-pink-600"
             >
               Back to Dashboard
             </button>
@@ -202,9 +204,15 @@ export default function AdminContent() {
                 required
                 className="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-amber-500"
               />
+              <input
+                placeholder="Ticket URL (optional)"
+                value={concert.ticketURL ?? ""}
+                onChange={e => setConcert(p => ({ ...p, ticketURL: e.target.value }))}
+                className="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-amber-500"
+              />
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-amber-400 to-pink-500 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600"
+                className="w-full hover:cursor-pointer bg-gradient-to-r from-amber-400 to-pink-500 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600"
               >
                 Add Concert
               </button>
@@ -227,7 +235,7 @@ export default function AdminContent() {
               <button
                 onClick={postNotice}
                 disabled={!noticeText.trim()}
-                className={`w-full py-2 rounded-lg font-medium text-white ${
+                className={`w-full py-2 rounded-lg font-medium text-white hover:cursor-pointer ${
                   noticeText.trim()
                     ? "bg-gradient-to-r from-amber-400 to-pink-500 hover:from-amber-500 hover:to-pink-600"
                     : "bg-gray-600"
@@ -262,13 +270,13 @@ export default function AdminContent() {
                         <div className="flex gap-2">
                           <button
                             onClick={updateNotice}
-                            className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-white text-sm"
+                            className="bg-green-600 hover:bg-green-700 px-3 py-1 hover:cursor-pointer rounded text-white text-sm"
                           >
                             Save
                           </button>
                           <button
                             onClick={() => setEditingNotice(null)}
-                            className="bg-gray-600 hover:bg-gray-700 px-3 py-1 rounded text-white text-sm"
+                            className="bg-gray-600 hover:bg-gray-700 px-3 py-1 hover:cursor-pointer rounded text-white text-sm"
                           >
                             Cancel
                           </button>
@@ -283,13 +291,13 @@ export default function AdminContent() {
                         <div className="flex gap-2">
                           <button
                             onClick={() => setEditingNotice({ id: n.id, text: n.text })}
-                            className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white text-sm"
+                            className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white text-sm hover:cursor-pointer"
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => deleteNotice(n.id)}
-                            className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white text-sm"
+                            className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white text-sm hover:cursor-pointer"
                           >
                             Delete
                           </button>
@@ -344,13 +352,13 @@ export default function AdminContent() {
                         <div className="flex gap-2">
                           <button
                             onClick={updateConcert}
-                            className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-white text-sm"
+                            className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-white text-sm hover:cursor-pointer"
                           >
                             Save
                           </button>
                           <button
                             onClick={() => setEditingConcert(null)}
-                            className="bg-gray-600 hover:bg-gray-700 px-3 py-1 rounded text-white text-sm"
+                            className="bg-gray-600 hover:bg-gray-700 px-3 py-1 rounded text-white text-sm hover:cursor-pointer"
                           >
                             Cancel
                           </button>
@@ -366,13 +374,13 @@ export default function AdminContent() {
                         <div className="flex gap-2">
                           <button
                             onClick={() => setEditingConcert({ id: c.id, ...c })}
-                            className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white text-sm"
+                            className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white text-sm hover:cursor-pointer"
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => deleteConcert(c.id)}
-                            className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white text-sm"
+                            className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white text-sm hover:cursor-pointer"
                           >
                             Delete
                           </button>
@@ -389,7 +397,7 @@ export default function AdminContent() {
             <button onClick={handleLogout} className="text-amber-400 bg-red-900/80 px-4 py-2 rounded-xl hover:cursor-pointer">Logout</button>
             <button
               onClick={() => router.push("/admin")}
-              className="bg-gradient-to-r from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-pink-600"
+              className="bg-gradient-to-r from-amber-400 to-pink-500 px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:cursor-pointer hover:to-pink-600"
             >
               Back to Dashboard
             </button>
