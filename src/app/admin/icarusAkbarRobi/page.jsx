@@ -8,11 +8,11 @@ import {
   onSnapshot,
   query,
   orderBy,
-  DocumentData,
   deleteDoc,
   doc,
   updateDoc,
 } from "firebase/firestore";
+
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import { db } from "../../firebaseConfig"; // ← adjust path if needed
@@ -29,16 +29,16 @@ const KNOWN_COLLECTIONS = [
 
 export default function DatabaseBrowser() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
-  const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
-  const [docs, setDocs] = useState<DocumentData[]>([]);
-  const [filteredDocs, setFilteredDocs] = useState<DocumentData[]>([]);
+  const [user, setUser] = useState(null);
+  const [selectedCollection, setSelectedCollection] = useState(null);
+  const [docs, setDocs] = useState([]);
+  const [filteredDocs, setFilteredDocs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
 
   // Edit modal state
-  const [editingDoc, setEditingDoc] = useState<DocumentData | null>(null);
+  const [editingDoc, setEditingDoc] = useState(null);
   const [editJson, setEditJson] = useState("");
 
   useEffect(() => {
@@ -97,16 +97,16 @@ export default function DatabaseBrowser() {
     setFilteredDocs(results);
   }, [searchTerm, docs]);
 
-  const handleDelete = async (docId: string) => {
+  const handleDelete = async (docId) => {
     if (!confirm(`Delete document ${docId}?`)) return;
     try {
-      await deleteDoc(doc(db, selectedCollection!, docId));
-    } catch (err: any) {
+      await deleteDoc(doc(db, selectedCollection, docId));
+    } catch (err) {
       alert("Delete failed: " + err.message);
     }
   };
 
-  const startEdit = (item: DocumentData) => {
+  const startEdit = (item) => {
     setEditingDoc(item);
     setEditJson(JSON.stringify({ ...item, id: undefined }, null, 2));
   };
@@ -126,7 +126,7 @@ export default function DatabaseBrowser() {
       await updateDoc(doc(db, selectedCollection, editingDoc.id), updatedData);
       setEditingDoc(null);
       setEditJson("");
-    } catch (err: any) {
+    } catch (err) {
       alert("Update failed: " + err.message);
     }
   };
