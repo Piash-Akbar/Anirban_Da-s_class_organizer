@@ -111,12 +111,23 @@ export default function AdminDashboard() {
     const startDateTime = new Date(`${req.date}T${req.time}:00+06:00`);
     const endDateTime = new Date(startDateTime.getTime() + 45 * 60000); // 45 minute class
 
+    // const calendarResponse = await fetch("/api/calendar/create", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     summary: `Violin Class - ${classRequests[0].displayName}`,
+    //     description: `Scheduled class for ${classRequests[0].displayName}`,
+    //     startDateTime: startDateTime.toISOString(),
+    //     endDateTime: endDateTime.toISOString(),
+    //     timeZone: "Asia/Dhaka"
+    //   })
+    // });
     const calendarResponse = await fetch("/api/calendar/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        summary: `Violin Class - ${classRequests[0].displayName}`,
-        description: `Scheduled class for ${classRequests[0].displayName}`,
+        summary: `Violin Class - ${classRequests.find(c => c.id === id)?.displayName || 'Student'}`,
+        description: `Scheduled class for ${classRequests.find(c => c.id === id)?.displayName || 'Student'}`,
         startDateTime: startDateTime.toISOString(),
         endDateTime: endDateTime.toISOString(),
         timeZone: "Asia/Dhaka"
@@ -188,8 +199,8 @@ export default function AdminDashboard() {
   const openEditModal = (student) => {
   setEditingStudent(student.id);
   setEditForm({
-    displayName: student.displayName ?? "",
-    classFee: student.classFee ?? ""
+    // displayName: student.displayName ?? "",
+    classFee: student.classFee ?? "Not Set Yet"
   });
 };
 

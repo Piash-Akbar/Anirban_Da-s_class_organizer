@@ -92,7 +92,16 @@ export default function BuyCreditPage() {
                 onChange={(e) => setAmount(e.target.value)}
                 className="p-2 rounded border text-white"
               />
-              <span>`total payable amount for {amount} classes is <b className="font-bold text-2xl">{amount*classFee}</b> INR `</span>
+              {/* <span>`total payable amount for {amount} classes is <b className="font-bold text-2xl">{amount*classFee}</b> INR `</span> */}
+
+              <span>
+                Total payable amount for {amount} {amount == 1 ? 'class' : 'classes'} is 
+                <b className="ml-2 font-bold text-2xl text-white-900">
+                  ₹{(amount * classFee).toLocaleString('en-IN')}
+                </b>
+              </span>
+
+
 
               <select
                 value={paymentMethod}
