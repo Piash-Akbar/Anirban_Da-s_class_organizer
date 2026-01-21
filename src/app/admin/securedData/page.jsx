@@ -88,16 +88,61 @@ export default function DatabaseBrowser() {
   const [editJson, setEditJson] = useState("");
 
   /* ───────── Auth ───────── */
+  // useEffect(() => {
+  //   const unsub = onAuthStateChanged(getAuth(), (u) => {
+  //     if (!u) {
+  //       router.push("/");
+  //       return;
+  //     }
+  //     setUser(u);
+  //     console.log("Admin authenticated as:", u);
+  //   });
+  //   return () => unsub();
+  // }, [router]);
+
   useEffect(() => {
-    const unsub = onAuthStateChanged(getAuth(), (u) => {
-      if (!u) {
-        router.replace("/");
+  const unsubscribe = onAuthStateChanged(getAuth(), async (u) => {
+    if (!u) {
+      router.push("/");
+      return;
+    }
+
+    try {
+      // Get the user document from Firestore
+      const userDocRef = doc(db, "users", u.uid);
+      const userSnap = await getDoc(userDocRef);
+
+      if (!userSnap.exists()) {
+        console.log("No user document found for UID:", u.uid);
+        router.push("/");
         return;
       }
+
+      const userData = userSnap.data();
+
+      if (userData.role !== "admin") {
+        console.log("User is not admin. Role:", userData.role);
+        router.push("/");
+        return;
+      }
+
+      // If we reach here → user is admin
       setUser(u);
-    });
-    return () => unsub();
-  }, [router]);
+      console.log("Admin authenticated as:", u.email || u.uid);
+    } catch (err) {
+      console.error("Error checking admin role:", err);
+      router.push("/");
+    }
+  });
+
+  return () => unsubscribe();
+}, [router]);
+
+
+
+
+
+
 
   /* ───────── Firestore subscribe ───────── */
   useEffect(() => {

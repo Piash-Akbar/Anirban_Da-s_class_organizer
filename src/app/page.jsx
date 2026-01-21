@@ -7,6 +7,7 @@ import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
 import { Great_Vibes } from "next/font/google";
 import HeroSection from "./components/HeroSection";
+import Footer from "./components/Footer/footer";
 
 const greatVibes = Great_Vibes({
   subsets: ["latin"],
@@ -296,7 +297,7 @@ export default function Portfolio() {
         </section>
 
         {/* Gallery Section */}
-        <section id="playings" className="py-20 px-4 md:px-20 bg-gray-900">
+        <section id="playings" className="py-20 px-4 md:px-20 bg-gray-800">
           <div className="max-w-6xl mx-auto">
             <h2 className={`text-6xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in p-4 antialiased ${greatVibes.className}`}>Highlights</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -386,7 +387,7 @@ export default function Portfolio() {
         </section>
 
         {/* Upcoming Events Section */}
-        <section id="events" className="py-20 px-4 md:px-20 bg-gray-800">
+        <section id="events" className="py-20 px-4 md:px-20 bg-gray-900">
           <div className="max-w-4xl mx-auto">
             <h2 className={`text-6xl font-serif font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 animate-fade-in p-4 antialiased ${greatVibes.className}`}>Upcoming Performances</h2>
             
@@ -425,66 +426,9 @@ export default function Portfolio() {
 
         {/* Contact Section */}
               {/* Contact Footer Section */}
-      <section id="contact" className="py-20 px-4 md:px-20 bg-gray-900">
-      <footer className="py-16 px-4 rounded-xl md:px-20 bg-black/70 border-t border-white/10 mt-24">
-        <div className="max-w-5xl mx-auto">
-          <h2 className={`text-5xl md:text-6xl text-center font-serif font-bold mb-12 ${greatVibes.className} text-amber-300`}>
-            Connect with Anirban
-          </h2>
+      <section id="contact" className="py-20 px-4 md:px-20 bg-gray-800">
 
-          <div className="flex flex-col items-center space-y-8 md:space-y-0 md:flex-row md:justify-center gap-12 mb-12">
-            {/* Instagram */}
-            <a
-              href="https://www.instagram.com/violin.anirban/" // Replace with actual handle
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col items-center gap-4 text-gray-300 hover:text-white transition-all duration-300"
-            >
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.735 0 8.332.012 7.052.07 3.5.27 0.858 2.91.659 6.462.6 7.743.589 8.146.589 12c0 3.855.011 4.258.07 5.538.199 3.553 2.839 6.193 6.391 6.391 1.281.059 1.684.07 4.949.07 3.264 0 3.667-.011 4.948-.07 3.552-.198 6.192-2.838 6.391-6.391.059-1.28.07-1.683.07-4.949 0-3.265-.011-3.668-.07-4.948-.198-3.553-2.838-6.192-6.391-6.391C15.684.011 15.281 0 12 0z"/>
-                  <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
-                </svg>
-              </div>
-              <span className="text-lg font-medium">Instagram</span>
-            </a>
-
-            {/* Facebook */}
-            <a
-              href="https://www.facebook.com/violin.anirban" // Replace with actual link
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col items-center gap-4 text-gray-300 hover:text-white transition-all duration-300"
-            >
-              <div className="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M22.675 0h-21.35C.597 0 0 .597 0 1.333v21.334C0 23.403.597 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.658-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.728 0 1.325-.597 1.325-1.333V1.333C24 .597 23.403 0 22.675 0z"/>
-                </svg>
-              </div>
-              <span className="text-lg font-medium">Facebook</span>
-            </a>
-
-            {/* YouTube */}
-            <a
-              href="https://www.youtube.com/@AnirbanBhattacharjee" // Replace with actual channel
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col items-center gap-4 text-gray-300 hover:text-white transition-all duration-300"
-            >
-              <div className="w-20 h-20 bg-red-600 rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-              </div>
-              <span className="text-lg font-medium">YouTube</span>
-            </a>
-          </div>
-
-          <div className="text-center text-gray-400 text-sm">
-            <p>© 2025 Anirban Bhattacharjee</p>
-          </div>
-        </div>
-      </footer>
+        <Footer />
       </section>
       </div>
     </>
