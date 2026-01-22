@@ -213,7 +213,7 @@ export default function Portfolio() {
             </div>
 
             {/* Enhanced Content Container */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-gray-900/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/10 p-8 md:p-12 hover:shadow-amber-500/10 transition-all duration-500 animate-fade-in" style={{ animationDelay: '200ms' }}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/10 p-8 md:p-12 hover:shadow-amber-500/10 transition-all duration-500 animate-fade-in" style={{ animationDelay: '200ms' }}>
               
               {/* Text Content with Better Typography */}
               <div className="space-y-6">

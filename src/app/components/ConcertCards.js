@@ -139,7 +139,7 @@ export default function ConcertCard({
                      text-amber-200 hover:text-amber-100 
                      transition-all hover:scale-105"
         >
-          Details →
+          View Details →
         </Link>
       </div>
     </div>
