@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Artist Portfolio & Studio Manager 🎵 📅
 
-## Getting Started
+A high-performance digital hub for music educators. This isn't just a portfolio—it's a full-stack studio management tool that synchronizes with **Google Calendar** and tracks **student payments**, helping teachers spend less time on admin and more time on music.
 
-First, run the development server:
+**Live Demo:** [violinanirban.vercel.app](https://violinanirban.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Key Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🎹 The Professional Portfolio
+- **Dynamic Showcase:** Highlighting performances, gallery, and artistic journey.
+- **Client Inquiry System:** Seamless contact and class request forms.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 🗓️ Smart Class Organizer (The Core)
+- **Google Calendar Sync:** Automated scheduling. When a class request is accepted, it is instantly pushed to the teacher's Google Calendar.
+- **Schedule Management:** Conflict-free planning for weekly or one-off lessons.
+- **Payment Tracking:** Log and monitor student payments and pending dues.
+- **Student CRM:** Centralized database for student contact info and progress notes.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Technical Highlights
 
-## Learn More
+* **OAuth 2.0 Integration:** Securely connecting to the **Google Calendar API** for real-time event creation.
+* **State Management:** Efficiently handling complex class schedules and payment statuses.
+* **Automated Workflows:** Logic-driven status updates (Pending -> Accepted -> Calendar Entry).
 
-To learn more about Next.js, take a look at the following resources:
+## 💻 Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework:** [Next.js](https://nextjs.org/) (App Router)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Integration:** [Google Calendar API](https://developers.google.com/calendar)
+- **Deployment:** [Vercel](https://vercel.com/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔧 Installation & Setup
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/Piash-Akbar/Artist-Portfolio-and-Class-Organizer.git](https://github.com/Piash-Akbar/Artist-Portfolio-and-Class-Organizer.git)
